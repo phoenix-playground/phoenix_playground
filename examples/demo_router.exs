@@ -1,6 +1,6 @@
 #!/usr/bin/env elixir
 Mix.install([
-  {:phoenix_playground, path: "#{__DIR__}/.."}
+  {:phoenix_playground, github: "phoenix-playground/phoenix_playground"}
   # TODO:
   # {:phoenix_playground, "~> 0.1.0"}
 ])
@@ -19,7 +19,7 @@ defmodule CounterLive do
       <button phx-click="inc">+</button>
       <button phx-click="dec">-</button>
 
-      <p style="margin-top: 1em;">Now edit <code><%= __ENV__.file %></code> in your editor...</p>
+      <p style="margin-top: 1em;">Now edit <code><%= __ENV__.file %>:<%= __ENV__.line %></code> in your editor...</p>
     </div>
     """
   end
