@@ -18,6 +18,15 @@ defmodule PhoenixPlayground.MixProject do
   end
 
   defp deps do
-    []
+    [
+      {:jason, "~> 1.0"},
+      {:phoenix, "~> 1.0"},
+      {:phoenix_live_view, "~> 0.20"},
+      {:bandit, "~> 1.0"},
+      {:floki, "~> 0.35"},
+      # Don't start phoenix_live_reload in case someone just wants PhoenixPlayground.Test.
+      # Instead, manually start it in PhoenixPlayground.start_link/1.
+      {:phoenix_live_reload, "~> 1.5", runtime: false}
+    ]
   end
 end
