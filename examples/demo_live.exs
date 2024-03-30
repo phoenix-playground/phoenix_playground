@@ -19,7 +19,7 @@ defmodule DemoLive do
       <button phx-click="inc">+</button>
       <button phx-click="dec">-</button>
 
-      <p style="margin-top: 1em;">Now edit <code><%= __ENV__.file %></code> in your editor...</p>
+      <p style="margin-top: 1em;">Now edit <code><%= __ENV__.file %>:<%= __ENV__.line %></code> in your editor...</p>
     </div>
     """
   end

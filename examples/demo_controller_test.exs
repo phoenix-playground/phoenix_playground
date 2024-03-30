@@ -8,8 +8,8 @@ Mix.install([
 defmodule DemoController do
   use Phoenix.Controller, formats: [:html]
   use Phoenix.Component
-  plug(:put_layout, false)
-  plug(:put_view, __MODULE__)
+  plug :put_layout, false
+  plug :put_view, __MODULE__
 
   def index(conn, params) do
     count =
