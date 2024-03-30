@@ -47,6 +47,10 @@ defmodule PhoenixPlayground do
     path = module.__info__(:compile)[:source]
     basename = Path.basename(path)
 
+    # PhoenixLiveReload requires Hex
+    Application.ensure_all_started(:hex)
+    Application.ensure_all_started(:phoenix_live_reload)
+
     Application.put_env(:phoenix_live_reload, :dirs, [
       Path.dirname(path)
     ])

@@ -24,7 +24,9 @@ defmodule PhoenixPlayground.MixProject do
       {:phoenix_live_view, "~> 0.20"},
       {:bandit, "~> 1.0"},
       {:floki, "~> 0.35"},
-      {:phoenix_live_reload, "~> 1.5"}
+      # Don't start phoenix_live_reload in case someone just wants PhoenixPlayground.Test.
+      # Instead, manually start it in PhoenixPlayground.start_link/1.
+      {:phoenix_live_reload, "~> 1.5", runtime: false}
     ]
   end
 end
