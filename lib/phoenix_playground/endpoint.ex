@@ -13,8 +13,7 @@ defmodule PhoenixPlayground.Endpoint do
           :type,
           :module,
           :port,
-          :basename,
-          :router
+          :basename
         ]
       )
 
@@ -22,6 +21,7 @@ defmodule PhoenixPlayground.Endpoint do
       case options[:type] do
         :controller -> PhoenixPlayground.ControllerRouter
         :live -> PhoenixPlayground.LiveRouter
+        :router -> options[:module]
       end
 
     options = Keyword.put_new(options, :router, router)

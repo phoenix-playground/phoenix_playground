@@ -20,6 +20,7 @@ defmodule PhoenixPlayground do
       Keyword.validate!(options, [
         :live,
         :controller,
+        :router,
         port: 4000,
         open_browser: true
       ])
@@ -32,8 +33,11 @@ defmodule PhoenixPlayground do
         controller = options[:controller] ->
           {:controller, controller}
 
+        router = options[:router] ->
+          {:router, router}
+
         true ->
-          raise "missing :live or :controller"
+          raise "missing :live, :controller, or :router"
       end
 
     if options[:open_browser] do
