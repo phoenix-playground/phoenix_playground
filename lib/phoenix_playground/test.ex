@@ -1,7 +1,7 @@
 defmodule PhoenixPlayground.Test do
-  @moduledoc """
-  TODO
-  """
+  # TODO
+  # @moduledoc """
+  # """
 
   defmacro __using__([{type, module}]) do
     module = Macro.expand(module, __ENV__)

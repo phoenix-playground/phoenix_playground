@@ -1,7 +1,7 @@
 defmodule PhoenixPlayground do
-  @moduledoc """
-  TODO
-  """
+  # TODO
+  # @moduledoc """
+  # """
 
   @doc false
   def child_spec(options) do
@@ -12,9 +12,9 @@ defmodule PhoenixPlayground do
     }
   end
 
-  @doc """
-  TODO
-  """
+  # TODO
+  # @doc """
+  # """
   def start_link(options) do
     options =
       Keyword.validate!(options, [

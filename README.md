@@ -1,8 +1,15 @@
-# PhoenixPlayground
+# Phoenix Playground
 
 [![CI](https://github.com/phoenix-playground/phoenix_playground/actions/workflows/ci.yml/badge.svg)](https://github.com/phoenix-playground/phoenix_playground/actions/workflows/ci.yml)
 
-TODO
+Phoenix Playground makes it easy to create single-file [Phoenix](https://www.phoenixframework.org) applications.
+
+## Examples
+
+  * [`examples/demo_live.exs`](examples/demo_live.exs)
+  * [`examples/demo_controller.exs`](examples/demo_controller.exs)
+
+See more at [`examples/`](examples/).
 
 ## License
 
