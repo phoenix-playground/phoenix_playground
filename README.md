@@ -7,9 +7,10 @@ Phoenix Playground makes it easy to create single-file [Phoenix](https://www.pho
 ## Examples
 
   * [`examples/demo_live.exs`](examples/demo_live.exs)
+  * [`examples/demo_live_test.exs`](examples/demo_live_test.exs)
   * [`examples/demo_controller.exs`](examples/demo_controller.exs)
-
-See more at [`examples/`](examples/).
+  * [`examples/demo_controller_test.exs`](examples/demo_controller_test.exs)
+  * [`examples/demo_router.exs`](examples/demo_router.exs)
 
 ## License
 
