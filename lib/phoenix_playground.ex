@@ -12,9 +12,24 @@ defmodule PhoenixPlayground do
     }
   end
 
-  # TODO
-  # @doc """
-  # """
+  @doc """
+  Starts Phoenix Playground.
+
+  This functions starts Phoenix with a LiveView (`:live`), a controller (`:controller`),
+  or a router (`:router`).
+
+  ## Options
+
+    * `:live` - a LiveView module.
+
+    * `:controller` - a controller module.
+
+    * `:router` - a router module.
+
+    * `:port` - port to listen on, defaults to: `4000`.
+
+    * `:open_browser` - whether to open the browser on start, defaults to `true`.
+  """
   def start_link(options) do
     options =
       Keyword.validate!(options, [

@@ -1,8 +1,6 @@
 #!/usr/bin/env elixir
 Mix.install([
-  {:phoenix_playground, github: "phoenix-playground/phoenix_playground"}
-  # TODO:
-  # {:phoenix_playground, "~> 0.1.0"}
+  {:phoenix_playground, "~> 0.1.0"}
 ])
 
 defmodule CounterLive do
