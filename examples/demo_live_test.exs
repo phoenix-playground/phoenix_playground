@@ -12,13 +12,9 @@ defmodule DemoLive do
 
   def render(assigns) do
     ~H"""
-    <div style="padding: 1em;">
-      <span style="font-family: monospace;">Count: <%= @count %></span>
-      <button phx-click="inc">+</button>
-      <button phx-click="dec">-</button>
-
-      <p style="margin-top: 1em;">Now edit <code><%= __ENV__.file %></code> in your editor...</p>
-    </div>
+    <span>Count: <%= @count %></span>
+    <button phx-click="inc">+</button>
+    <button phx-click="dec">-</button>
     """
   end
 

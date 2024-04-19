@@ -21,13 +21,17 @@ defmodule DemoController do
 
   def index(assigns) do
     ~H"""
-    <div style="padding: 1em;">
-      <span style="font-family: monospace;"><%= @count %></span>
-      <button onclick={"window.location.href='/?count=#{@count + 1}'"}>+</button>
-      <button onclick={"window.location.href='/?count=#{@count - 1}'"}>-</button>
+    <span><%= @count %></span>
+    <button onclick={"window.location.href='/?count=#{@count + 1}'"}>+</button>
+    <button onclick={"window.location.href='/?count=#{@count - 1}'"}>-</button>
 
-      <p style="margin-top: 1em;">Now edit <code><%= __ENV__.file %>:<%= __ENV__.line %></code> in your editor...</p>
-    </div>
+    <p>Now edit <code><%= __ENV__.file %>:<%= __ENV__.line %></code> in your editor...</p>
+
+    <style type="text/css">
+      body { padding: 1em; }
+      span { font-family: monospace; }
+      p { margin-top: 1em; }
+    </style>
     """
   end
 end
