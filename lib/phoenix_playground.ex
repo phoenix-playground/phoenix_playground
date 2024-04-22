@@ -84,8 +84,6 @@ defmodule PhoenixPlayground do
       Path.dirname(path)
     ])
 
-    Application.put_env(:phoenix_live_view, :debug_heex_annotations, true)
-
     options =
       [
         type: type,

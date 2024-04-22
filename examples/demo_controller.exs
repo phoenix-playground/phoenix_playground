@@ -36,5 +36,5 @@ defmodule DemoController do
   end
 end
 
-{:ok, _} = PhoenixPlayground.start_link(controller: DemoController)
-Process.sleep(:infinity)
+PhoenixPlayground.start(controller: DemoController)
+unless IEx.started?(), do: Process.sleep(:infinity)
