@@ -20,12 +20,10 @@ defmodule PhoenixPlayground.Reloader do
   end
 
   defp recompile(path) do
-    {:ok, quoted} =
-      path
-      |> File.read!()
-      |> Code.string_to_quoted()
-
-    Macro.prewalk(quoted, fn
+    path
+    |> File.read!()
+    |> Code.string_to_quoted!()
+    |> Macro.prewalk(fn
       {:defmodule, _, [mod, _]} = ast ->
         mod =
           case mod do
