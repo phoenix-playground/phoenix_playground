@@ -5,15 +5,17 @@ defmodule PhoenixPlayground.Endpoint do
 
   defoverridable start_link: 1
 
-  @signing_salt [
-                  then(:inet.gethostname(), fn {:ok, host} -> host end),
-                  System.get_env("USER", ""),
-                  System.version(),
-                  :erlang.system_info(:version),
-                  :erlang.system_info(:system_architecture)
-                ]
-                |> :erlang.md5()
-                |> Base.url_encode64(padding: false)
+  @secret_key_base [
+                     then(:inet.gethostname(), fn {:ok, host} -> host end),
+                     System.get_env("USER", ""),
+                     System.version(),
+                     :erlang.system_info(:version),
+                     :erlang.system_info(:system_architecture)
+                   ]
+                   |> :erlang.md5()
+                   |> Base.url_encode64(padding: false)
+
+  @signing_salt "ll+Leuc4"
 
   def start_link(options) do
     options =
@@ -62,7 +64,7 @@ defmodule PhoenixPlayground.Endpoint do
         http: [ip: {127, 0, 0, 1}, port: options[:port]],
         server: !!options[:port],
         live_view: [signing_salt: @signing_salt],
-        secret_key_base: String.duplicate("a", 64),
+        secret_key_base: @secret_key_base,
         pubsub_server: PhoenixPlayground.PubSub,
         debug_errors: true,
         phoenix_playground: Map.new(options)
