@@ -74,6 +74,9 @@ defmodule PhoenixPlayground.Endpoint do
   socket "/live", Phoenix.LiveView.Socket
   socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
 
+  plug Plug.Static, from: {:phoenix, "priv/static"}, at: "/assets/phoenix"
+  plug Plug.Static, from: {:phoenix_live_view, "priv/static"}, at: "/assets/phoenix_live_view"
+
   plug Phoenix.LiveReloader
 
   plug Plug.Parsers,

@@ -20,12 +20,8 @@ defmodule PhoenixPlayground.Layouts do
 
   def render("live.html", assigns) do
     ~H"""
-    <script src={"https://cdn.jsdelivr.net/npm/phoenix@#{phx_vsn()}/priv/static/phoenix.min.js"}>
-    </script>
-    <script
-      src={"https://cdn.jsdelivr.net/npm/phoenix_live_view@#{lv_vsn()}/priv/static/phoenix_live_view.min.js"}
-    >
-    </script>
+    <script src="/assets/phoenix/phoenix.js"></script>
+    <script src="/assets/phoenix_live_view/phoenix_live_view.js"></script>
     <script>
       let liveSocket = new window.LiveView.LiveSocket("/live", window.Phoenix.Socket)
       liveSocket.connect()
@@ -59,7 +55,4 @@ defmodule PhoenixPlayground.Layouts do
     <%= @inner_content %>
     """
   end
-
-  defp phx_vsn, do: Application.spec(:phoenix, :vsn)
-  defp lv_vsn, do: Application.spec(:phoenix_live_view, :vsn)
 end
