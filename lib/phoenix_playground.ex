@@ -1,16 +1,7 @@
 defmodule PhoenixPlayground do
-  # TODO
-  # @moduledoc """
-  # """
-
-  @doc false
-  def child_spec(options) do
-    %{
-      id: __MODULE__,
-      start: {__MODULE__, :start_link, [options]},
-      type: :supervisor
-    }
-  end
+  @moduledoc """
+  Phoenix Playground makes it easy to create single-file Phoenix applications.
+  """
 
   @doc """
   Starts Phoenix Playground.
@@ -30,6 +21,29 @@ defmodule PhoenixPlayground do
 
     * `:open_browser` - whether to open the browser on start, defaults to `true`.
   """
+  def start(options) do
+    case Supervisor.start_child(PhoenixPlayground.Application, {PhoenixPlayground, options}) do
+      {:ok, pid} ->
+        {:ok, pid}
+
+      {:error, {:already_started, pid}} ->
+        {:ok, pid}
+
+      other ->
+        other
+    end
+  end
+
+  @doc false
+  def child_spec(options) do
+    %{
+      id: __MODULE__,
+      start: {__MODULE__, :start_link, [options]},
+      type: :supervisor
+    }
+  end
+
+  @doc false
   def start_link(options) do
     options =
       Keyword.validate!(options, [

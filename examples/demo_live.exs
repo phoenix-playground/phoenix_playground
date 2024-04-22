@@ -35,5 +35,5 @@ defmodule DemoLive do
   end
 end
 
-{:ok, _} = PhoenixPlayground.start_link(live: DemoLive)
-Process.sleep(:infinity)
+PhoenixPlayground.start(live: DemoLive)
+unless IEx.started?(), do: Process.sleep(:infinity)
