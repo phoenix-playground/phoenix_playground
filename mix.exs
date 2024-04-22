@@ -2,7 +2,7 @@ defmodule PhoenixPlayground.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/phoenix-playground/phoenix_playground"
-  @version "0.1.0"
+  @version "0.1.1-dev"
 
   def project do
     [
@@ -42,6 +42,9 @@ defmodule PhoenixPlayground.MixProject do
       extras: [
         "README.md",
         "CHANGELOG.md"
+      ],
+      skip_code_autolink_to: [
+        "PhoenixPlayground.start_link/1"
       ]
     ]
   end

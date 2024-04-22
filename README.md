@@ -6,6 +6,46 @@ Phoenix Playground makes it easy to create single-file [Phoenix](https://www.pho
 
 ## Examples
 
+Create a `demo.exs` file:
+
+```elixir
+# demo.exs
+Mix.install([
+  {:phoenix_playground, "~> 0.1.0"}
+])
+
+defmodule DemoLive do
+  use Phoenix.LiveView
+
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, count: 0)}
+  end
+
+  def render(assigns) do
+    ~H"""
+    <span><%= @count %></span>
+    <button phx-click="inc">+</button>
+    <button phx-click="dec">-</button>
+    """
+  end
+
+  def handle_event("inc", _params, socket) do
+    {:noreply, assign(socket, count: socket.assigns.count + 1)}
+  end
+end
+
+PhoenixPlayground.start(live: DemoLive)
+unless IEx.started?(), do: Process.sleep(:infinity)
+```
+
+and run it:
+
+```
+$ iex demo.exs
+```
+
+See more examples below:
+
   * [`examples/demo_live.exs`](examples/demo_live.exs)
   * [`examples/demo_live_test.exs`](examples/demo_live_test.exs)
   * [`examples/demo_controller.exs`](examples/demo_controller.exs)
