@@ -5,6 +5,16 @@ defmodule PhoenixPlayground.Endpoint do
 
   defoverridable start_link: 1
 
+  @signing_salt [
+                  then(:inet.gethostname(), fn {:ok, host} -> host end),
+                  System.get_env("USER", ""),
+                  System.version(),
+                  :erlang.system_info(:version),
+                  :erlang.system_info(:system_architecture)
+                ]
+                |> :erlang.md5()
+                |> Base.url_encode64(padding: false)
+
   def start_link(options) do
     options =
       Keyword.validate!(
@@ -51,7 +61,7 @@ defmodule PhoenixPlayground.Endpoint do
         adapter: Bandit.PhoenixAdapter,
         http: [ip: {127, 0, 0, 1}, port: options[:port]],
         server: !!options[:port],
-        live_view: [signing_salt: "aaaaaaaa"],
+        live_view: [signing_salt: @signing_salt],
         secret_key_base: String.duplicate("a", 64),
         pubsub_server: PhoenixPlayground.PubSub,
         debug_errors: true,
@@ -65,7 +75,7 @@ defmodule PhoenixPlayground.Endpoint do
   @session_options [
     store: :cookie,
     key: "_phoenix_playground_key",
-    signing_salt: "ll+Leuc3",
+    signing_salt: @signing_salt,
     same_site: "Lax",
     # 14 days
     max_age: 14 * 24 * 60 * 60
