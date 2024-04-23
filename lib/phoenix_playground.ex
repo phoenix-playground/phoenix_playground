@@ -20,6 +20,9 @@ defmodule PhoenixPlayground do
     * `:port` - port to listen on, defaults to: `4000`.
 
     * `:open_browser` - whether to open the browser on start, defaults to `true`.
+
+    * `:child_specs` - child specs to run in Phoenix Playground supervision tree. The playground
+      Phoenix endpoint is automatically added and is always the last child spec. Defaults to `[]`.
   """
   def start(options) do
     case Supervisor.start_child(PhoenixPlayground.Application, {PhoenixPlayground, options}) do
@@ -50,9 +53,12 @@ defmodule PhoenixPlayground do
         :live,
         :controller,
         :router,
+        child_specs: [],
         port: 4000,
         open_browser: true
       ])
+
+    {child_specs, options} = Keyword.pop!(options, :child_specs)
 
     {type, module} =
       cond do
@@ -91,11 +97,13 @@ defmodule PhoenixPlayground do
         basename: basename
       ] ++ Keyword.take(options, [:port])
 
-    children = [
-      {Phoenix.PubSub, name: PhoenixPlayground.PubSub},
-      PhoenixPlayground.Reloader,
-      {PhoenixPlayground.Endpoint, options}
-    ]
+    children =
+      child_specs ++
+        [
+          {Phoenix.PubSub, name: PhoenixPlayground.PubSub},
+          PhoenixPlayground.Reloader,
+          {PhoenixPlayground.Endpoint, options}
+        ]
 
     Supervisor.start_link(children, strategy: :one_for_one)
   end
