@@ -12,6 +12,8 @@
 
   * Add `:child_specs` option to specify additional processes to run in the supervision tree.
 
+  * Prevent VM from halting when playground is started.
+
 ## v0.1.0 (2024-04-18)
 
-  * Initial release
+  * Initial release.

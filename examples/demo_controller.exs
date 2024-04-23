@@ -37,4 +37,3 @@ defmodule DemoController do
 end
 
 PhoenixPlayground.start(controller: DemoController)
-unless IEx.started?(), do: Process.sleep(:infinity)

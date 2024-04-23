@@ -84,4 +84,3 @@ defmodule Router do
 end
 
 {:ok, _} = PhoenixPlayground.start_link(router: Router)
-Process.sleep(:infinity)

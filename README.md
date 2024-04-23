@@ -35,7 +35,6 @@ defmodule DemoLive do
 end
 
 PhoenixPlayground.start(live: DemoLive)
-unless IEx.started?(), do: Process.sleep(:infinity)
 ```
 
 and run it:

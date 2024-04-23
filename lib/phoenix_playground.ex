@@ -105,6 +105,7 @@ defmodule PhoenixPlayground do
           {PhoenixPlayground.Endpoint, options}
         ]
 
+    System.no_halt(true)
     Supervisor.start_link(children, strategy: :one_for_one)
   end
 end
