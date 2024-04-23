@@ -20,24 +20,10 @@ defmodule PhoenixPlayground.Reloader do
   end
 
   defp recompile(path) do
-    path
-    |> File.read!()
-    |> Code.string_to_quoted!()
-    |> Macro.prewalk(fn
-      {:defmodule, _, [mod, _]} = ast ->
-        mod =
-          case mod do
-            {:__aliases__, _, parts} -> Module.concat(parts)
-            mod when is_atom(mod) -> mod
-          end
-
-        :code.purge(mod)
-        :code.delete(mod)
-        Code.eval_quoted(ast, [], file: path)
-        :ok
-
-      ast ->
-        ast
-    end)
+    old = Code.get_compiler_option(:ignore_module_conflict) == true
+    Code.put_compiler_option(:ignore_module_conflict, true)
+    result = Code.eval_file(path)
+    Code.put_compiler_option(:ignore_module_conflict, old)
+    result
   end
 end
