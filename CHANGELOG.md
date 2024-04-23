@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.1.1-dev
+## v0.1.1 (2024-04-23)
 
   * Use local javascript assets.
 
