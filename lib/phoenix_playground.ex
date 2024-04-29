@@ -15,7 +15,7 @@ defmodule PhoenixPlayground do
 
     * `:controller` - a controller module.
 
-    * `:router` - a router module.
+    * `:plug` - a plug.
 
     * `:port` - port to listen on, defaults to: `4000`.
 
@@ -25,6 +25,23 @@ defmodule PhoenixPlayground do
       Phoenix endpoint is automatically added and is always the last child spec. Defaults to `[]`.
   """
   def start(options) do
+    options = Keyword.put_new(options, :file, get_file())
+
+    options =
+      if router = options[:router] do
+        IO.warn("setting :router is deprecated in favour of setting :plug")
+
+        options
+        |> Keyword.delete(:router)
+        |> Keyword.put(:plug, router)
+      else
+        options
+      end
+
+    if plug = options[:plug] do
+      Application.put_env(:phoenix_playground, :plug, plug)
+    end
+
     case Supervisor.start_child(PhoenixPlayground.Application, {PhoenixPlayground, options}) do
       {:ok, pid} ->
         {:ok, pid}
@@ -35,6 +52,26 @@ defmodule PhoenixPlayground do
       other ->
         other
     end
+  end
+
+  defp get_file do
+    {:current_stacktrace, stacktrace} = Process.info(self(), :current_stacktrace)
+    get_file(stacktrace)
+  end
+
+  defp get_file([
+         {PhoenixPlayground, :start, 1, _},
+         {_, :__FILE__, 1, meta} | _
+       ]) do
+    Path.expand(Keyword.fetch!(meta, :file))
+  end
+
+  defp get_file([_ | rest]) do
+    get_file(rest)
+  end
+
+  defp get_file([]) do
+    nil
   end
 
   @doc false
@@ -52,7 +89,8 @@ defmodule PhoenixPlayground do
       Keyword.validate!(options, [
         :live,
         :controller,
-        :router,
+        :plug,
+        :file,
         child_specs: [],
         port: 4000,
         open_browser: true
@@ -68,18 +106,18 @@ defmodule PhoenixPlayground do
         controller = options[:controller] ->
           {:controller, controller}
 
-        router = options[:router] ->
-          {:router, router}
+        options[:plug] ->
+          {:plug, :fetch_from_env}
 
         true ->
-          raise "missing :live, :controller, or :router"
+          raise "missing :live, :controller, or :plug"
       end
 
     if options[:open_browser] do
       Application.put_env(:phoenix, :browser_open, true)
     end
 
-    path = module.__info__(:compile)[:source]
+    path = options[:file] || to_string(module.__info__(:compile)[:source])
     basename = Path.basename(path)
 
     # PhoenixLiveReload requires Hex
@@ -101,7 +139,7 @@ defmodule PhoenixPlayground do
       child_specs ++
         [
           {Phoenix.PubSub, name: PhoenixPlayground.PubSub},
-          PhoenixPlayground.Reloader,
+          {PhoenixPlayground.Reloader, path},
           {PhoenixPlayground.Endpoint, options}
         ]
 

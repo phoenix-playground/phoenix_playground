@@ -29,14 +29,14 @@ defmodule PhoenixPlayground.Endpoint do
         ]
       )
 
-    router =
+    plug =
       case options[:type] do
         :controller -> PhoenixPlayground.ControllerRouter
         :live -> PhoenixPlayground.LiveRouter
-        :router -> options[:module]
+        :plug -> :fetch_from_env
       end
 
-    options = Keyword.put_new(options, :router, router)
+    options = Keyword.put_new(options, :plug, plug)
 
     live_reload_options =
       if basename = options[:basename] do
@@ -98,11 +98,30 @@ defmodule PhoenixPlayground.Endpoint do
 
   plug Plug.Session, @session_options
 
-  plug :router
+  plug :run_plug
 
-  defp router(conn, []) do
+  defp run_plug(conn, []) do
     config = conn.private.phoenix_endpoint.config(:phoenix_playground)
     conn = Plug.Conn.put_private(conn, :phoenix_playground, config)
-    config.router.call(conn, [])
+
+    case config.plug do
+      :fetch_from_env ->
+        case Application.fetch_env!(:phoenix_playground, :plug) do
+          module when is_atom(module) ->
+            module.call(conn, module.init([]))
+
+          {module, options} when is_atom(module) ->
+            module.call(conn, options)
+
+          fun when is_function(fun, 1) ->
+            fun.(conn)
+
+          fun when is_function(fun, 2) ->
+            fun.(conn, [])
+        end
+
+      module when is_atom(module) ->
+        module.call(conn, module.init([]))
+    end
   end
 end

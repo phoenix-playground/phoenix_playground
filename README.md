@@ -49,7 +49,7 @@ See more examples below:
   * [`examples/demo_live_test.exs`](examples/demo_live_test.exs)
   * [`examples/demo_controller.exs`](examples/demo_controller.exs)
   * [`examples/demo_controller_test.exs`](examples/demo_controller_test.exs)
-  * [`examples/demo_router.exs`](examples/demo_router.exs)
+  * [`examples/demo_plug.exs`](examples/demo_plug.exs)
 
 ## License
 
