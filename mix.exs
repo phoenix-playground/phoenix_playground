@@ -11,6 +11,7 @@ defmodule PhoenixPlayground.MixProject do
       elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       package: package(),
+      aliases: aliases(),
       docs: docs(),
       deps: deps()
     ]
@@ -34,6 +35,14 @@ defmodule PhoenixPlayground.MixProject do
     ]
   end
 
+  defp aliases do
+    [
+      docs: ["docs.setup", "docs", "docs.teardown"],
+      "docs.setup": &docs_setup/1,
+      "docs.teardown": &docs_teardown/1
+    ]
+  end
+
   defp docs do
     [
       main: "readme",
@@ -47,6 +56,25 @@ defmodule PhoenixPlayground.MixProject do
         "PhoenixPlayground.start_link/1"
       ]
     ]
+  end
+
+  defp docs_setup(_) do
+    tmp = "#{__DIR__}/tmp"
+    File.mkdir_p!(tmp)
+    File.cp!("#{__DIR__}/README.md", "#{tmp}/README.md")
+
+    File.write!("#{__DIR__}/README.md", [
+      File.read!("#{__DIR__}/README.md"),
+      "\n\n",
+      for path <- Path.wildcard("examples/*.exs") do
+        "[`#{path}`]: https://github.com/phoenix-playground/phoenix_playground/blob/v#{@version}/#{path}\n"
+      end
+    ])
+  end
+
+  defp docs_teardown(_) do
+    tmp = "#{__DIR__}/tmp"
+    File.rename!("#{tmp}/README.md", "#{__DIR__}/README.md")
   end
 
   defp deps do

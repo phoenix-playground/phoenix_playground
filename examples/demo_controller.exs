@@ -25,12 +25,9 @@ defmodule DemoController do
     <button onclick={"window.location.href='/?count=#{@count + 1}'"}>+</button>
     <button onclick={"window.location.href='/?count=#{@count - 1}'"}>-</button>
 
-    <p>Now edit <code><%= __ENV__.file %>:<%= __ENV__.line %></code> in your editor...</p>
-
     <style type="text/css">
       body { padding: 1em; }
       span { font-family: monospace; }
-      p { margin-top: 1em; }
     </style>
     """
   end

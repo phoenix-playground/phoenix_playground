@@ -6,6 +6,8 @@ Phoenix Playground makes it easy to create single-file [Phoenix](https://www.pho
 
 ## Examples
 
+[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https%3A%2F%2Fgithub.com%2Fphoenix-playground%2Fphoenix_playground%2Fblob%2Fmain%2Fexamples%2Fdemo_live.exs)
+
 Create a `demo.exs` file:
 
 ```elixir
@@ -45,11 +47,11 @@ $ iex demo.exs
 
 See more examples below:
 
-  * [`examples/demo_live.exs`](examples/demo_live.exs)
-  * [`examples/demo_live_test.exs`](examples/demo_live_test.exs)
-  * [`examples/demo_controller.exs`](examples/demo_controller.exs)
-  * [`examples/demo_controller_test.exs`](examples/demo_controller_test.exs)
-  * [`examples/demo_plug.exs`](examples/demo_plug.exs)
+  * [`examples/demo_live.exs`]
+  * [`examples/demo_live_test.exs`]
+  * [`examples/demo_controller.exs`]
+  * [`examples/demo_controller_test.exs`]
+  * [`examples/demo_plug.exs`]
 
 ## License
 
@@ -64,3 +66,9 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+[`examples/demo_live.exs`]: examples/demo_live.exs
+[`examples/demo_live_test.exs`]: examples/demo_live_test.exs
+[`examples/demo_controller.exs`]: examples/demo_controller.exs
+[`examples/demo_controller_test.exs`]: examples/demo_controller_test.exs
+[`examples/demo_plug.exs`]: examples/demo_plug.exs
