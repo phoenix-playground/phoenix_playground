@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.2 (2024-04-29)
+
+  * Deprecate setting `:router` in favour of `:plug`
+
 ## v0.1.1 (2024-04-23)
 
   * Use local javascript assets.
