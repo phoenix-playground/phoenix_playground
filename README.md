@@ -6,7 +6,7 @@ Phoenix Playground makes it easy to create single-file [Phoenix](https://www.pho
 
 ## Examples
 
-[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https%3A%2F%2Fgithub.com%2Fphoenix-playground%2Fphoenix_playground%2Fblob%2Fmain%2Fexamples%2Fdemo_live.exs)
+[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https%3A%2F%2Fgithub.com%2Fphoenix-playground%2Fphoenix_playground%2Fblob%2Fmain%2Fexamples%2Fdemo_live.livemd)
 
 Create a `demo.exs` file:
 
