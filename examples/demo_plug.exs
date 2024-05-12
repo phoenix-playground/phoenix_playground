@@ -1,6 +1,6 @@
 #!/usr/bin/env elixir
 Mix.install([
-  {:phoenix_playground, "~> 0.1.2"}
+  {:phoenix_playground, "~> 0.1.2", github: "phoenix-playground/phoenix_playground"}
 ])
 
 PhoenixPlayground.start(

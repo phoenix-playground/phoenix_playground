@@ -1,6 +1,6 @@
 #!/usr/bin/env elixir
 Mix.install([
-  {:phoenix_playground, "~> 0.1.0"}
+  {:phoenix_playground, "~> 0.1.0", github: "phoenix-playground/phoenix_playground"}
 ])
 
 defmodule DemoLive do
