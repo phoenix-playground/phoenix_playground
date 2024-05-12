@@ -3,76 +3,7 @@ defmodule PhoenixPlayground.Endpoint do
 
   use Phoenix.Endpoint, otp_app: :phoenix_playground
 
-  defoverridable start_link: 1
-
-  @secret_key_base [
-                     then(:inet.gethostname(), fn {:ok, host} -> host end),
-                     System.get_env("USER", ""),
-                     System.version(),
-                     :erlang.system_info(:version),
-                     :erlang.system_info(:system_architecture)
-                   ]
-                   |> :erlang.md5()
-                   |> Base.url_encode64(padding: false)
-
   @signing_salt "ll+Leuc4"
-
-  def start_link(options) do
-    options =
-      Keyword.validate!(
-        options,
-        [
-          :type,
-          :module,
-          :port,
-          :basename
-        ]
-      )
-
-    plug =
-      case options[:type] do
-        :controller -> PhoenixPlayground.ControllerRouter
-        :live -> PhoenixPlayground.LiveRouter
-        :plug -> :fetch_from_env
-      end
-
-    options = Keyword.put_new(options, :plug, plug)
-
-    live_reload_options =
-      if basename = options[:basename] do
-        [
-          live_reload: [
-            web_console_logger: true,
-            debounce: 100,
-            patterns: [
-              ~r/#{basename}$/
-            ],
-            notify: [
-              {"phoenix_playground", [~r/#{basename}$/]}
-            ]
-          ]
-        ]
-      else
-        []
-      end
-
-    Application.put_env(
-      :phoenix_playground,
-      __MODULE__,
-      [
-        adapter: Bandit.PhoenixAdapter,
-        http: [ip: {127, 0, 0, 1}, port: options[:port]],
-        server: !!options[:port],
-        live_view: [signing_salt: @signing_salt],
-        secret_key_base: @secret_key_base,
-        pubsub_server: PhoenixPlayground.PubSub,
-        debug_errors: true,
-        phoenix_playground: Map.new(options)
-      ] ++ live_reload_options
-    )
-
-    super(name: __MODULE__)
-  end
 
   @session_options [
     store: :cookie,
@@ -84,12 +15,15 @@ defmodule PhoenixPlayground.Endpoint do
   ]
 
   socket "/live", Phoenix.LiveView.Socket
-  socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
 
   plug Plug.Static, from: {:phoenix, "priv/static"}, at: "/assets/phoenix"
   plug Plug.Static, from: {:phoenix_live_view, "priv/static"}, at: "/assets/phoenix_live_view"
 
+  socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
   plug Phoenix.LiveReloader
+  plug Phoenix.CodeReloader, reloader: &PhoenixPlayground.CodeReloader.reload/2
+  # TODO:
+  # plug Phoenix.Ecto.CheckRepoStatus, otp_app: :phoenix_playground
 
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
@@ -97,31 +31,5 @@ defmodule PhoenixPlayground.Endpoint do
     json_decoder: Phoenix.json_library()
 
   plug Plug.Session, @session_options
-
-  plug :run_plug
-
-  defp run_plug(conn, []) do
-    config = conn.private.phoenix_endpoint.config(:phoenix_playground)
-    conn = Plug.Conn.put_private(conn, :phoenix_playground, config)
-
-    case config.plug do
-      :fetch_from_env ->
-        case Application.fetch_env!(:phoenix_playground, :plug) do
-          module when is_atom(module) ->
-            module.call(conn, module.init([]))
-
-          {module, options} when is_atom(module) ->
-            module.call(conn, options)
-
-          fun when is_function(fun, 1) ->
-            fun.(conn)
-
-          fun when is_function(fun, 2) ->
-            fun.(conn, [])
-        end
-
-      module when is_atom(module) ->
-        module.call(conn, module.init([]))
-    end
-  end
+  plug PhoenixPlayground.Router
 end

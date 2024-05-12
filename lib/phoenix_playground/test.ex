@@ -43,11 +43,14 @@ defmodule PhoenixPlayground.Test do
       end
   '''
 
-  defmacro __using__([{type, module}]) do
-    module = Macro.expand(module, __ENV__)
+  @secret_key_base String.duplicate("a", 32)
+  @signing_salt "ll+Leuc4"
+
+  defmacro __using__(options) do
+    options = Keyword.validate!(options, [:live, :controller])
 
     imports =
-      if type == :live do
+      if options[:live] do
         quote do
           import(Phoenix.LiveViewTest)
         end
@@ -55,15 +58,18 @@ defmodule PhoenixPlayground.Test do
 
     quote do
       import Phoenix.ConnTest
-      module = unquote(module)
-      type = unquote(type)
       unquote(imports)
 
       @endpoint PhoenixPlayground.Endpoint
-      @options [type: type, module: module]
 
       setup do
-        start_supervised!({@endpoint, @options})
+        start_supervised!(
+          {@endpoint,
+           secret_key_base: unquote(@secret_key_base),
+           live_view: [signing_salt: unquote(@signing_salt)],
+           phoenix_playground: unquote(options)}
+        )
+
         :ok
       end
     end

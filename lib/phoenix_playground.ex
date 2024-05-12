@@ -3,6 +3,18 @@ defmodule PhoenixPlayground do
   Phoenix Playground makes it easy to create single-file Phoenix applications.
   """
 
+  @secret_key_base [
+                     then(:inet.gethostname(), fn {:ok, host} -> host end),
+                     System.get_env("USER", ""),
+                     System.version(),
+                     :erlang.system_info(:version),
+                     :erlang.system_info(:system_architecture)
+                   ]
+                   |> :erlang.md5()
+                   |> Base.url_encode64(padding: false)
+
+  @signing_salt "ll+Leuc4"
+
   @doc """
   Starts Phoenix Playground.
 
@@ -25,7 +37,7 @@ defmodule PhoenixPlayground do
       Phoenix endpoint is automatically added and is always the last child spec. Defaults to `[]`.
   """
   def start(options) do
-    options = Keyword.put_new(options, :file, get_file())
+    options = Keyword.put(options, :file, get_file())
 
     options =
       if router = options[:router] do
@@ -47,6 +59,15 @@ defmodule PhoenixPlayground do
         {:ok, pid}
 
       {:error, {:already_started, pid}} ->
+        # In Livebook, path is nil. Livebook does its own code reloading, this just refreshes LV.
+        unless options[:file] do
+          Phoenix.PubSub.broadcast(
+            PhoenixPlayground.PubSub,
+            "live_view",
+            {:phoenix_live_reload, :live_view, nil}
+          )
+        end
+
         {:ok, pid}
 
       other ->
@@ -96,51 +117,74 @@ defmodule PhoenixPlayground do
         open_browser: true
       ])
 
-    {child_specs, options} = Keyword.pop!(options, :child_specs)
+    child_specs = Keyword.fetch!(options, :child_specs)
 
-    {type, module} =
-      cond do
-        live = options[:live] ->
-          {:live, live}
-
-        controller = options[:controller] ->
-          {:controller, controller}
-
-        options[:plug] ->
-          {:plug, :fetch_from_env}
-
-        true ->
-          raise "missing :live, :controller, or :plug"
-      end
+    path = options[:file]
+    Application.put_env(:phoenix_playground, :file, path)
 
     if options[:open_browser] do
       Application.put_env(:phoenix, :browser_open, true)
     end
 
-    path = options[:file] || to_string(module.__info__(:compile)[:source])
-    basename = Path.basename(path)
+    # in Livebook, path is nil
+    if path do
+      Application.put_env(:phoenix_live_reload, :dirs, [
+        Path.dirname(path)
+      ])
+    end
 
     # PhoenixLiveReload requires Hex
-    Application.ensure_all_started(:hex)
-    Application.ensure_all_started(:phoenix_live_reload)
+    {:ok, _} = Application.ensure_all_started(:hex)
+    {:ok, _} = Application.ensure_all_started(:phoenix_live_reload)
 
-    Application.put_env(:phoenix_live_reload, :dirs, [
-      Path.dirname(path)
-    ])
+    live_reload_options =
+      if options[:live] do
+        [
+          # In Livebook, path is nil
+          patterns:
+            if path do
+              # TODO: this should not be needed given we set :phoenix_live_reload :dirs
+              [~r/^#{Path.dirname(path)}$/]
+            else
+              []
+            end,
+          notify: [
+            live_view: [
+              ~r/^#{path}$/
+            ]
+          ]
+        ]
+      else
+        [
+          patterns: [
+            ~r/^#{path}$/
+          ]
+        ]
+      end
 
-    options =
+    endpoint_options =
       [
-        type: type,
-        module: module,
-        basename: basename
-      ] ++ Keyword.take(options, [:port])
+        adapter: Bandit.PhoenixAdapter,
+        http: [ip: {127, 0, 0, 1}, port: options[:port]],
+        server: !!options[:port],
+        live_view: [signing_salt: @signing_salt],
+        secret_key_base: @secret_key_base,
+        pubsub_server: PhoenixPlayground.PubSub,
+        debug_errors: true,
+        live_reload:
+          [
+            web_console_logger: true,
+            debounce: 100,
+            reloader: &PhoenixPlayground.CodeReloader.reload/1
+          ] ++ live_reload_options,
+        phoenix_playground: Keyword.take(options, [:live, :controller, :plug])
+      ]
 
     children =
       child_specs ++
         [
           {Phoenix.PubSub, name: PhoenixPlayground.PubSub},
-          {PhoenixPlayground.Reloader, path},
-          {PhoenixPlayground.Endpoint, options}
+          {PhoenixPlayground.Endpoint, endpoint_options}
         ]
 
     System.no_halt(true)

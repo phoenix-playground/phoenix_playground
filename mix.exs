@@ -81,7 +81,8 @@ defmodule PhoenixPlayground.MixProject do
     [
       {:jason, "~> 1.0"},
       {:phoenix, "~> 1.0"},
-      {:phoenix_live_view, "~> 0.20"},
+      {:phoenix_live_view, "~> 1.0-rc",
+       github: "wojtekmach/phoenix_live_view", branch: "wm-reloader"},
       {:bandit, "~> 1.0"},
       {:floki, "~> 0.35"},
 
