@@ -11,7 +11,7 @@ defmodule PhoenixPlayground.CodeReloader do
           Code.put_compiler_option(:ignore_module_conflict, old)
 
         # ignore fs errors. (Seems like saving file in vim sometimes make it temp dissapear?)
-        {:error, reason} ->
+        {:error, _reason} ->
           :ok
       end
     else
