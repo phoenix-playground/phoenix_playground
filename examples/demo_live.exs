@@ -18,7 +18,6 @@ defmodule DemoLive do
 
     <style type="text/css">
       body { padding: 1em; }
-      span { font-family: monospace; }
     </style>
     """
   end

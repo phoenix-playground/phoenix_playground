@@ -22,12 +22,11 @@ defmodule DemoController do
   def index(assigns) do
     ~H"""
     <span><%= @count %></span>
-    <button onclick={"window.location.href='/?count=#{@count + 1}'"}>+</button>
-    <button onclick={"window.location.href='/?count=#{@count - 1}'"}>-</button>
+    <button onclick={"window.location.href=\"/?count=#{@count + 1}\""}>+</button>
+    <button onclick={"window.location.href=\"/?count=#{@count - 1}\""}>-</button>
 
     <style type="text/css">
       body { padding: 1em; }
-      span { font-family: monospace; }
     </style>
     """
   end
