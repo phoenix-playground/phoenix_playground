@@ -1,3 +1,5 @@
+Application.put_env(:phoenix_playground, PhoenixPlayground.Endpoint, debug_errors: true)
+
 defmodule PhoenixPlayground.Endpoint do
   @moduledoc false
 

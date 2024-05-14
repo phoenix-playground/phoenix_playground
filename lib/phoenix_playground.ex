@@ -162,6 +162,7 @@ defmodule PhoenixPlayground do
         ]
       end
 
+    # Some compile-time options are defined at the top of lib/phoenix_playground/endpoint.ex
     endpoint_options =
       [
         adapter: Bandit.PhoenixAdapter,
@@ -170,7 +171,6 @@ defmodule PhoenixPlayground do
         live_view: [signing_salt: @signing_salt],
         secret_key_base: @secret_key_base,
         pubsub_server: PhoenixPlayground.PubSub,
-        debug_errors: true,
         live_reload:
           [
             web_console_logger: true,
