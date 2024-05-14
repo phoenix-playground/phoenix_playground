@@ -1,8 +1,14 @@
 # Changelog
 
+## HEAD
+
+  * Use state-preserving live reload.
+
+  * Initial support for displaying errors via Plug.Debugger (`debug_errors: true`).
+
 ## v0.1.2 (2024-04-29)
 
-  * Deprecate setting `:router` in favour of `:plug`
+  * Deprecate setting `:router` in favour of `:plug`.
 
 ## v0.1.1 (2024-04-23)
 
