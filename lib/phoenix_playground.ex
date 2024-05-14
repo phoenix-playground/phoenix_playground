@@ -37,7 +37,16 @@ defmodule PhoenixPlayground do
       Phoenix endpoint is automatically added and is always the last child spec. Defaults to `[]`.
   """
   def start(options) do
-    options = Keyword.put(options, :file, get_file())
+    options =
+      case Application.fetch_env(:phoenix_playground, :file) do
+        {:ok, file} ->
+          Keyword.put(options, :file, file)
+
+        :error ->
+          file = get_file()
+          Application.put_env(:phoenix_playground, :file, file)
+          Keyword.put(options, :file, file)
+      end
 
     options =
       if router = options[:router] do
@@ -126,6 +135,10 @@ defmodule PhoenixPlayground do
       Application.put_env(:phoenix, :browser_open, true)
     end
 
+    if live = options[:live] do
+      Application.put_env(:phoenix_playground, :live, live)
+    end
+
     # in Livebook, path is nil
     if path do
       Application.put_env(:phoenix_live_reload, :dirs, [
@@ -144,7 +157,7 @@ defmodule PhoenixPlayground do
           patterns:
             if path do
               # TODO: this should not be needed given we set :phoenix_live_reload :dirs
-              [~r/^#{Path.dirname(path)}$/]
+              [~r/^does_not_matter$/]
             else
               []
             end,

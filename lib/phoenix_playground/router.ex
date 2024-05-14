@@ -11,8 +11,7 @@ defmodule PhoenixPlayground.Router do
   @impl true
   def call(conn, []) do
     case PhoenixPlayground.Endpoint.config(:phoenix_playground) do
-      [live: live] ->
-        PhoenixPlayground.Router.DelegateLive.module(live)
+      [live: _live] ->
         PhoenixPlayground.Router.LiveRouter.call(conn, [])
 
       [controller: controller] ->
@@ -120,10 +119,6 @@ defmodule PhoenixPlayground.Router do
     @impl true
     def handle_info(message, socket) do
       module().handle_info(message, socket)
-    end
-
-    def module(live) do
-      Application.put_env(:phoenix_playground, :live, live)
     end
 
     def module do
