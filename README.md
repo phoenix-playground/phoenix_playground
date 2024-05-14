@@ -11,7 +11,6 @@ Phoenix Playground makes it easy to create single-file [Phoenix](https://www.pho
 Create a `demo_live.exs` file:
 
 ```elixir
-# demo.exs
 Mix.install([
   {:phoenix_playground, "~> 0.1.0"}
 ])
