@@ -63,11 +63,17 @@ defmodule PhoenixPlayground.Test do
       @endpoint PhoenixPlayground.Endpoint
 
       setup do
+        options = unquote(options)
+
+        if live = options[:live] do
+          Application.put_env(:phoenix_playground, :live, live)
+        end
+
         start_supervised!(
           {@endpoint,
            secret_key_base: unquote(@secret_key_base),
            live_view: [signing_salt: unquote(@signing_salt)],
-           phoenix_playground: unquote(options)}
+           phoenix_playground: options}
         )
 
         :ok
