@@ -28,6 +28,10 @@ defmodule DemoLive do
     <span><%= @count %></span>
     <button phx-click="inc">+</button>
     <button phx-click="dec">-</button>
+
+    <style type="text/css">
+      body { padding: 1em; }
+    </style>
     """
   end
 
@@ -48,6 +52,9 @@ and run it:
 ```
 $ iex demo.exs
 ```
+
+<img width="1195" alt="image" src="https://github.com/phoenix-playground/phoenix_playground/assets/76071/d20adbac-d2da-4a5a-a921-fdac718ab5a2">
+
 
 See more examples below:
 
