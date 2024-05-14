@@ -8,7 +8,7 @@ Phoenix Playground makes it easy to create single-file [Phoenix](https://www.pho
 
 [![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https%3A%2F%2Fgithub.com%2Fphoenix-playground%2Fphoenix_playground%2Fblob%2Fmain%2Fexamples%2Fdemo_live.livemd)
 
-Create a `demo.exs` file:
+Create a `demo_live.exs` file:
 
 ```elixir
 # demo.exs
@@ -50,7 +50,7 @@ PhoenixPlayground.start(live: DemoLive)
 and run it:
 
 ```
-$ iex demo.exs
+$ iex demo_live.exs
 ```
 
 <img width="1195" alt="image" src="demo.png">
