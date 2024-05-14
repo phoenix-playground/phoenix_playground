@@ -7,7 +7,7 @@ defmodule PhoenixPlayground.CodeReloader do
         {:ok, contents} ->
           old = Code.get_compiler_option(:ignore_module_conflict) == true
           Code.put_compiler_option(:ignore_module_conflict, true)
-          Code.eval_string(contents)
+          Code.eval_string(contents, [], file: path)
           Code.put_compiler_option(:ignore_module_conflict, old)
 
         # ignore fs errors. (Seems like saving file in vim sometimes make it temp dissapear?)
