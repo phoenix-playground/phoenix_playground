@@ -2,7 +2,7 @@ defmodule PhoenixPlayground.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/phoenix-playground/phoenix_playground"
-  @version "0.1.2"
+  @version "0.1.3"
 
   def project do
     [
@@ -79,11 +79,10 @@ defmodule PhoenixPlayground.MixProject do
 
   defp deps do
     [
-      {:jason, "~> 1.0"},
       {:phoenix, "~> 1.0"},
-      {:phoenix_live_view, "~> 1.0-rc",
-       github: "wojtekmach/phoenix_live_view", branch: "wm-code-reloader"},
+      {:phoenix_live_view, "~> 0.20.0 or ~> 1.0-rc"},
       {:bandit, "~> 1.0"},
+      {:jason, "~> 1.0"},
       {:floki, "~> 0.35"},
 
       # Don't start phoenix_live_reload in case someone just wants PhoenixPlayground.Test.

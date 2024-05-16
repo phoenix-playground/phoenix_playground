@@ -151,7 +151,14 @@ defmodule PhoenixPlayground do
     {:ok, _} = Application.ensure_all_started(:phoenix_live_reload)
 
     live_reload_options =
-      if options[:live] do
+      if options[:live] &&
+           unquote(
+             # TODO: remove when depending on LV 1.0.
+             Version.match?(
+               to_string(Application.spec(:phoenix_live_view, :vsn)),
+               ">= 1.0.0-rc.1"
+             )
+           ) do
         [
           # In Livebook, path is nil
           patterns:

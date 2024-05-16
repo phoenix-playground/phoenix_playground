@@ -1,10 +1,10 @@
 # Changelog
 
-## HEAD
+## v0.1.3 (2024-05-16)
 
-  * Use state-preserving live reload.
+  * Use state-preserving live reload. (Requires Phoenix LiveView 1.0.0-rc.1+.)
 
-  * Initial support for displaying errors via Plug.Debugger (`debug_errors: true`).
+  * Display errors using `Plug.Debugger`.
 
 ## v0.1.2 (2024-04-29)
 
