@@ -27,6 +27,8 @@ defmodule PhoenixPlayground.Endpoint do
   # TODO:
   # plug Phoenix.Ecto.CheckRepoStatus, otp_app: :phoenix_playground
 
+  plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
+
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
