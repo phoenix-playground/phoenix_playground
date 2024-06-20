@@ -113,9 +113,11 @@ defmodule PhoenixPlayground.Router do
 
     @impl true
     def handle_params(unsigned_params, uri, socket) do
-      if function_exported?(module(), :handle_params, 3),
-        do: module().handle_params(unsigned_params, uri, socket),
-        else: {:noreply, socket}
+      if function_exported?(module(), :handle_params, 3) do
+        module().handle_params(unsigned_params, uri, socket)
+      else
+        {:noreply, socket}
+      end
     end
 
     @impl true
