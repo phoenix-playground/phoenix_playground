@@ -23,7 +23,10 @@ defmodule PhoenixPlayground.Layouts do
     <script src="/assets/phoenix/phoenix.js"></script>
     <script src="/assets/phoenix_live_view/phoenix_live_view.js"></script>
     <script>
-      let liveSocket = new window.LiveView.LiveSocket("/live", window.Phoenix.Socket)
+      // Set a global hooks object to be used by the LiveSocket,
+      // this allows hooks to be defined directly in LiveView templates.
+      window.hooks = {}
+      let liveSocket = new window.LiveView.LiveSocket("/live", window.Phoenix.Socket, { hooks })
       liveSocket.connect()
 
       window.addEventListener("phx:live_reload:attached", ({detail: reloader}) => {
