@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.1.4-dev
+
+  * Delegate LiveView `handle_params/3`.
+
+  * Add support for LiveView hooks.
+
+  * Add support for `:page_title` assign.
+
 ## v0.1.3 (2024-05-16)
 
   * Use state-preserving live reload. (Requires Phoenix LiveView 1.0.0-rc.1+.)

@@ -25,6 +25,12 @@ defmodule PhoenixPlayground do
 
     * `:live` - a LiveView module.
 
+      Phoenix Playground adds the following conveniences to the given LiveView:
+
+        * a `:page_title` assign can be used to customise `<head>` `<title>` tag.
+
+        * a `window.hooks` object can be used to register hooks. See `examples/demo_hooks.exs`.
+
     * `:controller` - a controller module.
 
     * `:plug` - a plug.
