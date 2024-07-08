@@ -10,6 +10,9 @@ defmodule PhoenixPlayground.Layouts do
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <.live_title>
+          <%= assigns[:page_title] || "Phoenix Playground" %>
+        </.live_title>
       </head>
       <body>
         <%= @inner_content %>
