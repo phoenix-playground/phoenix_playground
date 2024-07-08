@@ -1,9 +1,9 @@
 #!/usr/bin/env elixir
 Mix.install([
-  {:phoenix_playground, "~> 0.1.3"}
+  {:phoenix_playground, "~> 0.1.4"}
 ])
 
-defmodule DemoHook do
+defmodule DemoHooks do
   use Phoenix.LiveView
 
   def mount(_params, _session, socket) do

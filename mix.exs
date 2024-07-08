@@ -2,7 +2,7 @@ defmodule PhoenixPlayground.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/phoenix-playground/phoenix_playground"
-  @version "0.1.3"
+  @version "0.1.4-dev"
 
   def project do
     [
