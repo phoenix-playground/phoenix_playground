@@ -129,7 +129,10 @@ defmodule PhoenixPlayground do
         :file,
         child_specs: [],
         port: 4000,
-        open_browser: true
+        host: "localhost",
+        open_browser: true,
+        live_reload: true,
+        ip: {127, 0, 0, 1}
       ])
 
     child_specs = Keyword.fetch!(options, :child_specs)
@@ -152,9 +155,11 @@ defmodule PhoenixPlayground do
       ])
     end
 
-    # PhoenixLiveReload requires Hex
-    {:ok, _} = Application.ensure_all_started(:hex)
-    {:ok, _} = Application.ensure_all_started(:phoenix_live_reload)
+    if options[:live_reload] do
+      # PhoenixLiveReload requires Hex
+      {:ok, _} = Application.ensure_all_started(:hex)
+      {:ok, _} = Application.ensure_all_started(:phoenix_live_reload)
+    end
 
     live_reload_options =
       if options[:live] &&
@@ -188,21 +193,27 @@ defmodule PhoenixPlayground do
         ]
       end
 
-    # Some compile-time options are defined at the top of lib/phoenix_playground/endpoint.ex
-    endpoint_options =
-      [
-        adapter: Bandit.PhoenixAdapter,
-        http: [ip: {127, 0, 0, 1}, port: options[:port]],
-        server: !!options[:port],
-        live_view: [signing_salt: @signing_salt],
-        secret_key_base: @secret_key_base,
-        pubsub_server: PhoenixPlayground.PubSub,
-        live_reload:
+    lr_options =
+      if options[:live_reload],
+        do:
           [
             web_console_logger: true,
             debounce: 100,
             reloader: &PhoenixPlayground.CodeReloader.reload/1
           ] ++ live_reload_options,
+        else: []
+
+    # Some compile-time options are defined at the top of lib/phoenix_playground/endpoint.ex
+    endpoint_options =
+      [
+        adapter: Bandit.PhoenixAdapter,
+        http: [ip: options[:ip], port: options[:port]],
+        url: [host: options[:host]],
+        server: !!options[:port],
+        live_view: [signing_salt: @signing_salt],
+        secret_key_base: @secret_key_base,
+        pubsub_server: PhoenixPlayground.PubSub,
+        live_reload: lr_options,
         phoenix_playground: Keyword.take(options, [:live, :controller, :plug])
       ]
 
