@@ -155,6 +155,8 @@ defmodule PhoenixPlayground do
       ])
     end
 
+    Application.put_env(:phoenix_playground, :live_reload, options[:live_reload])
+
     if options[:live_reload] do
       # PhoenixLiveReload requires Hex
       {:ok, _} = Application.ensure_all_started(:hex)
@@ -194,14 +196,19 @@ defmodule PhoenixPlayground do
       end
 
     lr_options =
-      if options[:live_reload],
-        do:
-          [
-            web_console_logger: true,
-            debounce: 100,
-            reloader: &PhoenixPlayground.CodeReloader.reload/1
-          ] ++ live_reload_options,
-        else: []
+      if options[:live_reload] do
+        [
+          web_console_logger: true,
+          debounce: 100,
+          reloader: &PhoenixPlayground.CodeReloader.reload/1
+        ] ++ live_reload_options
+      else
+        [
+          notify: [
+            live_view: []
+          ]
+        ]
+      end
 
     # Some compile-time options are defined at the top of lib/phoenix_playground/endpoint.ex
     endpoint_options =
