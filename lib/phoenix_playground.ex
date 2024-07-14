@@ -128,11 +128,12 @@ defmodule PhoenixPlayground do
       Keyword.validate!(options, [
         :live,
         :controller,
-        :plug,
         :file,
+        :plug,
         child_specs: [],
         port: 4000,
-        open_browser: true
+        open_browser: true,
+        endpoint_options: []
       ])
 
     child_specs = Keyword.fetch!(options, :child_specs)
@@ -208,6 +209,7 @@ defmodule PhoenixPlayground do
           ] ++ live_reload_options,
         phoenix_playground: Keyword.take(options, [:live, :controller, :plug])
       ]
+      |> Keyword.merge(Keyword.get(options, :endpoint_options, []))
 
     children =
       child_specs ++
