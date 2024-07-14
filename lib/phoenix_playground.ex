@@ -85,6 +85,9 @@ defmodule PhoenixPlayground do
 
         {:ok, pid}
 
+      {:error, {{:EXIT, {exception, _trace}}, _child_info}} ->
+        raise exception
+
       other ->
         other
     end
