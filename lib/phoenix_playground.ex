@@ -37,6 +37,8 @@ defmodule PhoenixPlayground do
 
     * `:port` - port to listen on, defaults to: `4000`.
 
+    * `:endpoint_options` - additional Phoenix endpoint options, defaults to `[]`.
+
     * `:open_browser` - whether to open the browser on start, defaults to `true`.
 
     * `:child_specs` - child specs to run in Phoenix Playground supervision tree. The playground
@@ -85,6 +87,9 @@ defmodule PhoenixPlayground do
 
         {:ok, pid}
 
+      {:error, {{:EXIT, {exception, _trace}}, _child_info}} ->
+        raise exception
+
       other ->
         other
     end
@@ -125,14 +130,15 @@ defmodule PhoenixPlayground do
       Keyword.validate!(options, [
         :live,
         :controller,
-        :plug,
         :file,
+        :plug,
         child_specs: [],
         port: 4000,
         host: "localhost",
-        open_browser: true,
         live_reload: true,
-        ip: {127, 0, 0, 1}
+        ip: {127, 0, 0, 1},
+        open_browser: true,
+        endpoint_options: []
       ])
 
     child_specs = Keyword.fetch!(options, :child_specs)
@@ -223,6 +229,7 @@ defmodule PhoenixPlayground do
         live_reload: lr_options,
         phoenix_playground: Keyword.take(options, [:live, :controller, :plug])
       ]
+      |> Keyword.merge(Keyword.get(options, :endpoint_options, []))
 
     children =
       child_specs ++
