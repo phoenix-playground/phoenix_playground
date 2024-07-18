@@ -37,6 +37,8 @@ defmodule PhoenixPlayground do
 
     * `:port` - port to listen on, defaults to: `4000`.
 
+    * `:endpoint_options` - additional Phoenix endpoint options, defaults to `[]`.
+
     * `:open_browser` - whether to open the browser on start, defaults to `true`.
 
     * `:child_specs` - child specs to run in Phoenix Playground supervision tree. The playground
