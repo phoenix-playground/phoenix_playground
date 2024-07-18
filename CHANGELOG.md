@@ -1,12 +1,16 @@
 # Changelog
 
-## v0.1.4-dev
+## v0.1.4 (2024-07-18)
 
   * Delegate LiveView `handle_params/3`.
 
   * Add support for LiveView hooks.
 
+  * Add support for LiveView uploaders.
+
   * Add support for `:page_title` assign.
+
+  * Add `:endpoint_options` option
 
 ## v0.1.3 (2024-05-16)
 
