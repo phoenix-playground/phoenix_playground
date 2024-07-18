@@ -21,7 +21,7 @@ defmodule PhoenixPlayground.Endpoint do
   plug Plug.Static, from: {:phoenix, "priv/static"}, at: "/assets/phoenix"
   plug Plug.Static, from: {:phoenix_live_view, "priv/static"}, at: "/assets/phoenix_live_view"
 
-  if Application.get_env(:phoenix_playground, :live_reload) do
+  if Application.compile_env(:phoenix_playground, :live_reload) do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader, reloader: &PhoenixPlayground.CodeReloader.reload/2
