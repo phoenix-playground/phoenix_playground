@@ -134,6 +134,9 @@ defmodule PhoenixPlayground do
         :plug,
         child_specs: [],
         port: 4000,
+        host: "localhost",
+        live_reload: true,
+        ip: {127, 0, 0, 1},
         open_browser: true,
         endpoint_options: []
       ])
@@ -158,9 +161,13 @@ defmodule PhoenixPlayground do
       ])
     end
 
-    # PhoenixLiveReload requires Hex
-    {:ok, _} = Application.ensure_all_started(:hex)
-    {:ok, _} = Application.ensure_all_started(:phoenix_live_reload)
+    Application.put_env(:phoenix_playground, :live_reload, options[:live_reload])
+
+    if options[:live_reload] do
+      # PhoenixLiveReload requires Hex
+      {:ok, _} = Application.ensure_all_started(:hex)
+      {:ok, _} = Application.ensure_all_started(:phoenix_live_reload)
+    end
 
     live_reload_options =
       if options[:live] &&
@@ -194,21 +201,32 @@ defmodule PhoenixPlayground do
         ]
       end
 
+    lr_options =
+      if options[:live_reload] do
+        [
+          web_console_logger: true,
+          debounce: 100,
+          reloader: &PhoenixPlayground.CodeReloader.reload/1
+        ] ++ live_reload_options
+      else
+        [
+          notify: [
+            live_view: []
+          ]
+        ]
+      end
+
     # Some compile-time options are defined at the top of lib/phoenix_playground/endpoint.ex
     endpoint_options =
       [
         adapter: Bandit.PhoenixAdapter,
-        http: [ip: {127, 0, 0, 1}, port: options[:port]],
+        http: [ip: options[:ip], port: options[:port]],
+        url: [host: options[:host]],
         server: !!options[:port],
         live_view: [signing_salt: @signing_salt],
         secret_key_base: @secret_key_base,
         pubsub_server: PhoenixPlayground.PubSub,
-        live_reload:
-          [
-            web_console_logger: true,
-            debounce: 100,
-            reloader: &PhoenixPlayground.CodeReloader.reload/1
-          ] ++ live_reload_options,
+        live_reload: lr_options,
         phoenix_playground: Keyword.take(options, [:live, :controller, :plug])
       ]
       |> Keyword.merge(Keyword.get(options, :endpoint_options, []))
