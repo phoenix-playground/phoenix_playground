@@ -1,6 +1,6 @@
 #!/usr/bin/env elixir
 Mix.install([
-  {:phoenix_playground, path: Path.expand("..", __DIR__)}
+  {:phoenix_playground, "~> 0.1.3"}
 ])
 
 defmodule DemoController do
@@ -32,9 +32,4 @@ defmodule DemoController do
   end
 end
 
-PhoenixPlayground.start(
-  controller: DemoController,
-  endpoint_options: [
-    secret_key_base: "b8X+FHhV/h4N3mFRcwtGmKmTIJkl7acxJyTujEWevtfmH7T+v3P9tb+H+K1JpJlj"
-  ]
-)
+PhoenixPlayground.start(controller: DemoController)
