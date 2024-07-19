@@ -138,9 +138,60 @@ defmodule PhoenixPlayground do
         live_reload: true,
         ip: {127, 0, 0, 1},
         open_browser: true,
-        endpoint_options: []
+        endpoint_options: [],
+        cli: []
       ])
 
+    switches = [
+      port: :integer,
+      host: :string,
+      open_browser: :boolean,
+      live_reload: :boolean,
+      app: :string
+    ]
+
+    {cli_options, args} = OptionParser.parse!(options[:cli], strict: switches)
+
+    case args do
+      args when args in [[], ["run"]] ->
+        start_server(Keyword.merge(options, cli_options))
+
+      ["dry-run"] ->
+        :ok
+
+      ["fly", "deploy"] ->
+        # app = cli_options[:app] || raise "missing --app APP"
+        app = nil
+        PhoenixPlayground.Fly.deploy(options[:file], app)
+
+      other ->
+        IO.puts("""
+        Usage: #{Path.relative_to_cwd(options[:file])} [command] [options]
+
+        Commands:
+
+          run           Run the script
+
+            Options:
+
+              --port PORT - HTTP port to listen on
+
+          fly deploy    Deploy the script to Fly.io
+
+            Options:
+
+              --app APP - the name of the Fly.io app
+
+        General options:
+
+          -h, --help    Print command-specific usage
+
+        error: invalid arguments: #{Enum.join(other, " ")}\
+        """)
+    end
+  end
+
+  defp start_server(options) do
     child_specs = Keyword.fetch!(options, :child_specs)
 
     path = options[:file]

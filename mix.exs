@@ -85,6 +85,9 @@ defmodule PhoenixPlayground.MixProject do
       {:jason, "~> 1.0"},
       {:floki, "~> 0.35"},
 
+      # For Fly.io
+      {:req, "~> 0.5.4"},
+
       # Don't start phoenix_live_reload in case someone just wants PhoenixPlayground.Test.
       # Instead, manually start it in PhoenixPlayground.start_link/1.
       {:phoenix_live_reload, "~> 1.5", runtime: false},

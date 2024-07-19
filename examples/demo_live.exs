@@ -1,6 +1,5 @@
-#!/usr/bin/env elixir
 Mix.install([
-  {:phoenix_playground, "~> 0.1.3"}
+  {:phoenix_playground, github: "phoenix-playground/phoenix_playground", branch: "wm-fly"}
 ])
 
 defmodule DemoLive do
@@ -31,4 +30,4 @@ defmodule DemoLive do
   end
 end
 
-PhoenixPlayground.start(live: DemoLive)
+PhoenixPlayground.start(live: DemoLive, cli: System.argv())
