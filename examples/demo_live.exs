@@ -1,6 +1,9 @@
-Mix.install([
-  {:phoenix_playground, github: "phoenix-playground/phoenix_playground", branch: "wm-fly"}
-])
+Mix.install(
+  [
+    {:phoenix_playground, github: "phoenix-playground/phoenix_playground", branch: "wm-fly"}
+  ],
+  force: true
+)
 
 defmodule DemoLive do
   use Phoenix.LiveView
