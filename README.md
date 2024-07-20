@@ -83,4 +83,4 @@ limitations under the License.
 [`examples/demo_controller.exs`]: examples/demo_controller.exs
 [`examples/demo_controller_test.exs`]: examples/demo_controller_test.exs
 [`examples/demo_plug.exs`]: examples/demo_plug.exs
-[`examples/demo_hook.exs`]: examples/demo_hook.exs
+[`examples/demo_hooks.exs`]: examples/demo_hooks.exs
