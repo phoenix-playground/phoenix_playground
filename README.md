@@ -1,6 +1,8 @@
 # Phoenix Playground
 
 [![CI](https://github.com/phoenix-playground/phoenix_playground/actions/workflows/ci.yml/badge.svg)](https://github.com/phoenix-playground/phoenix_playground/actions/workflows/ci.yml)
+[![Version](https://img.shields.io/hexpm/v/phoenix_playground.svg)](https://hex.pm/packages/phoenix_playground)
+[![Hex Docs](https://img.shields.io/badge/documentation-gray.svg)](https://hexdocs.pm/phoenix_playground)
 
 Phoenix Playground makes it easy to create single-file [Phoenix](https://www.phoenixframework.org) applications.
 
