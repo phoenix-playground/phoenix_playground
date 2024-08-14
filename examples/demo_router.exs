@@ -1,3 +1,8 @@
+#!/usr/bin/env elixir
+Mix.install([
+  {:phoenix_playground, "~> 0.1.5"}
+])
+
 defmodule CounterLive do
   use Phoenix.LiveView
 

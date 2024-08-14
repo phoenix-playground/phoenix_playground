@@ -1,6 +1,6 @@
 #!/usr/bin/env elixir
 Mix.install([
-  {:phoenix_playground, "~> 0.1.3"}
+  {:phoenix_playground, "~> 0.1.5"}
 ])
 
 defmodule DemoController do
@@ -28,7 +28,7 @@ defmodule DemoController do
   end
 end
 
-Logger.configure(level: :info)
+Logger.configure(level: :warning)
 ExUnit.start()
 
 defmodule DemoControllerTest do

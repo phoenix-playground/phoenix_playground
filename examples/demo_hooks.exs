@@ -1,6 +1,6 @@
 #!/usr/bin/env elixir
 Mix.install([
-  {:phoenix_playground, "~> 0.1.4"}
+  {:phoenix_playground, "~> 0.1.5"}
 ])
 
 defmodule DemoHooks do
@@ -30,4 +30,4 @@ defmodule DemoHooks do
   end
 end
 
-PhoenixPlayground.start(live: DemoHook)
+PhoenixPlayground.start(live: DemoHooks)
