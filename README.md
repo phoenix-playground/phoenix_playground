@@ -52,7 +52,7 @@ and run it:
 $ iex demo_live.exs
 ```
 
-<img width="1195" alt="image" src="demo.png">
+<img width="1195" alt="image" src="assets/demo.png">
 
 
 See more examples below:

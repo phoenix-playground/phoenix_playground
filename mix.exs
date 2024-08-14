@@ -52,6 +52,7 @@ defmodule PhoenixPlayground.MixProject do
         "README.md",
         "CHANGELOG.md"
       ],
+      assets: %{"assets" => "assets"},
       skip_code_autolink_to: [
         "PhoenixPlayground.start_link/1"
       ]
