@@ -39,6 +39,8 @@ defmodule PhoenixPlayground do
 
     * `:endpoint_options` - additional Phoenix endpoint options, defaults to `[]`.
 
+    * `:debug_errors` - whether to use Phoenix error debugger, defaults to `true`.
+
     * `:open_browser` - whether to open the browser on start, defaults to `true`.
 
     * `:child_specs` - child specs to run in Phoenix Playground supervision tree. The playground
@@ -130,21 +132,26 @@ defmodule PhoenixPlayground do
       Keyword.validate!(options, [
         :live,
         :controller,
-        :file,
         :plug,
-        child_specs: [],
+        :file,
         port: 4000,
         host: "localhost",
         live_reload: true,
         ip: {127, 0, 0, 1},
+        endpoint_options: [],
+        debug_errors: false,
         open_browser: true,
-        endpoint_options: []
+        child_specs: []
       ])
 
     child_specs = Keyword.fetch!(options, :child_specs)
 
     path = options[:file]
     Application.put_env(:phoenix_playground, :file, path)
+
+    if options[:debug_errors] do
+      Application.put_env(:phoenix_playground, :debug_errors, true)
+    end
 
     if options[:open_browser] do
       Application.put_env(:phoenix, :browser_open, true)
