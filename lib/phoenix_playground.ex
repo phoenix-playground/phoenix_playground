@@ -217,7 +217,7 @@ defmodule PhoenixPlayground do
         [
           web_console_logger: true,
           debounce: 100,
-          reloader: &PhoenixPlayground.CodeReloader.reload/1
+          reloader: {PhoenixPlayground.CodeReloader, :reload, []}
         ] ++ live_reload_options
       else
         [
