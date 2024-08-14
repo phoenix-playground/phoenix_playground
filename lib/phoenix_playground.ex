@@ -143,7 +143,7 @@ defmodule PhoenixPlayground do
         live_reload: true,
         ip: {127, 0, 0, 1},
         endpoint_options: [],
-        debug_errors: false,
+        debug_errors: true,
         open_browser: true,
         child_specs: []
       ])
