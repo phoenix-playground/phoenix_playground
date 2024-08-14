@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.1.5 (2024-08-14)
+
+  * Fix live reloading.
+
+  * Add `:debug_errors` option.
+
+  * Document `PhoenixPlayground.Layout`.
+
+  * Add `examples/demo_router.exs`.
+
 ## v0.1.4 (2024-07-18)
 
   * Delegate LiveView `handle_params/3`.
