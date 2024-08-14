@@ -31,7 +31,11 @@ defmodule PhoenixPlayground do
 
         * a `window.hooks` object can be used to register hooks. See `examples/demo_hooks.exs`.
 
+      This LiveView will automatically use `PhoenixPlayground.Layout`.
+
     * `:controller` - a controller module.
+
+      This controller will automatically use `PhoenixPlayground.Layout`.
 
     * `:plug` - a plug.
 
