@@ -223,7 +223,8 @@ defmodule PhoenixPlayground do
         [
           notify: [
             live_view: []
-          ]
+          ],
+          reloader: {PhoenixPlayground.CodeReloader, :reload, []}
         ]
       end
 
