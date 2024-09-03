@@ -10,15 +10,19 @@ defmodule PhoenixPlayground.Router do
 
   @impl true
   def call(conn, []) do
-    case PhoenixPlayground.Endpoint.config(:phoenix_playground) do
-      [live: _live] ->
+    endpoint = conn.private.phoenix_endpoint
+
+    options = endpoint.config(:phoenix_playground)
+
+    cond do
+      options[:live] ->
         PhoenixPlayground.Router.LiveRouter.call(conn, [])
 
-      [controller: controller] ->
+      controller = options[:controller] ->
         conn = put_in(conn.private[:phoenix_playground_controller], controller)
         PhoenixPlayground.Router.ControllerRouter.call(conn, [])
 
-      [plug: _] ->
+      options[:plug] ->
         # always fetch plug from app env to allow code reloading anonymous functions
         plug = Application.fetch_env!(:phoenix_playground, :plug)
 
@@ -36,8 +40,8 @@ defmodule PhoenixPlayground.Router do
             fun.(conn, [])
         end
 
-      other ->
-        raise ArgumentError, "expected :live, :controller, or :plug, got: #{inspect(other)}"
+      true ->
+        raise ArgumentError, "expected :live, :controller, or :plug, got: #{inspect(options)}"
     end
   end
 

@@ -142,6 +142,7 @@ defmodule PhoenixPlayground do
         host: "localhost",
         live_reload: true,
         ip: {127, 0, 0, 1},
+        endpoint: PhoenixPlayground.Endpoint,
         endpoint_options: [],
         debug_errors: true,
         open_browser: true,
@@ -247,7 +248,7 @@ defmodule PhoenixPlayground do
       child_specs ++
         [
           {Phoenix.PubSub, name: PhoenixPlayground.PubSub},
-          {PhoenixPlayground.Endpoint, endpoint_options}
+          {Keyword.fetch!(options, :endpoint), endpoint_options}
         ]
 
     System.no_halt(true)

@@ -47,7 +47,12 @@ defmodule PhoenixPlayground.Test do
   @signing_salt "ll+Leuc4"
 
   defmacro __using__(options) do
-    options = Keyword.validate!(options, [:live, :controller])
+    options =
+      Keyword.validate!(options, [
+        :live,
+        :controller,
+        endpoint: PhoenixPlayground.Endpoint
+      ])
 
     imports =
       if options[:live] do
@@ -60,7 +65,7 @@ defmodule PhoenixPlayground.Test do
       import Phoenix.ConnTest
       unquote(imports)
 
-      @endpoint PhoenixPlayground.Endpoint
+      @endpoint unquote(options[:endpoint])
 
       setup do
         options = unquote(options)
