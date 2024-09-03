@@ -24,6 +24,7 @@ defmodule PhoenixPlayground.Layout do
         <.live_title>
           <%= assigns[:page_title] || "Phoenix Playground" %>
         </.live_title>
+        <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgAB/ajN8ioAAAAASUVORK5CYII=">
       </head>
       <body>
         <script src="/assets/phoenix/phoenix.js"></script>
