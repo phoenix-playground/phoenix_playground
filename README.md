@@ -66,6 +66,7 @@ See more examples below:
   * [`examples/demo_plug.exs`]
   * [`examples/demo_router.exs`]
   * [`examples/demo_hooks.exs`]
+  * [`examples/demo_endpoint.exs`]
 
 ## License
 
@@ -88,3 +89,4 @@ limitations under the License.
 [`examples/demo_plug.exs`]: examples/demo_plug.exs
 [`examples/demo_router.exs`]: examples/demo_router.exs
 [`examples/demo_hooks.exs`]: examples/demo_hooks.exs
+[`examples/demo_endpoint.exs`]: examples/demo_endpoint.exs
