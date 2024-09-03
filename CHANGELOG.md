@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.1.6 (2024-09-03)
+
+  * Always use PhoenixPlayground.CodeReloader
+
+  * Add blank favicon to layout
+
+  * Add `:endpoint` option
+
 ## v0.1.5 (2024-08-14)
 
   * Fix live reloading.

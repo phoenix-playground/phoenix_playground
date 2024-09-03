@@ -1,6 +1,6 @@
 #!/usr/bin/env elixir
 Mix.install([
-  {:phoenix_playground, "~> 0.1.5"}
+  {:phoenix_playground, "~> 0.1.6"}
 ])
 
 defmodule DemoController do

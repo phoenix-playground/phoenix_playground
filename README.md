@@ -14,7 +14,7 @@ Create a `demo_live.exs` file:
 
 ```elixir
 Mix.install([
-  {:phoenix_playground, "~> 0.1.5"}
+  {:phoenix_playground, "~> 0.1.6"}
 ])
 
 defmodule DemoLive do
