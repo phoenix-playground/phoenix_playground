@@ -130,11 +130,7 @@ defmodule PhoenixPlayground.Router do
 
     @impl true
     def handle_async(message, result, socket) do
-      if function_exported?(module(), :handle_async, 3) do
-        module().handle_async(message, result, socket)
-      else
-        {:noreply, socket}
-      end
+      module().handle_async(message, result, socket)
     end
 
     def module do
