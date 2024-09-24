@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.7 (2024-09-24)
+
+  * Delegate LiveView `handle_async/3`.
+
 ## v0.1.6 (2024-09-03)
 
   * Always use PhoenixPlayground.CodeReloader
