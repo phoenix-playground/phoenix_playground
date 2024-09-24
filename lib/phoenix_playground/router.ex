@@ -132,6 +132,11 @@ defmodule PhoenixPlayground.Router do
       module().handle_info(message, socket)
     end
 
+    @impl true
+    def handle_async(message, result, socket) do
+      module().handle_async(message, result, socket)
+    end
+
     def module do
       Application.fetch_env!(:phoenix_playground, :live)
     end
