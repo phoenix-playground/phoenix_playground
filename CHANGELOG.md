@@ -1,5 +1,10 @@
 # Changelog
 
+## (unreleased)
+
+  * move plug option into start_link
+  * guard against LiveReload being included for releases
+
 ## v0.1.7 (2024-09-24)
 
   * Delegate LiveView `handle_async/3`.

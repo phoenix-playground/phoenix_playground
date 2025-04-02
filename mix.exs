@@ -81,7 +81,7 @@ defmodule PhoenixPlayground.MixProject do
   defp deps do
     [
       {:phoenix, "~> 1.0"},
-      {:phoenix_live_view, "~> 0.20.0 or ~> 1.0-rc"},
+      {:phoenix_live_view, "~> 1.0"},
       {:bandit, "~> 1.0"},
       {:jason, "~> 1.0"},
       {:floki, "~> 0.35"},

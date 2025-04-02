@@ -73,10 +73,6 @@ defmodule PhoenixPlayground do
         options
       end
 
-    if plug = options[:plug] do
-      Application.put_env(:phoenix_playground, :plug, plug)
-    end
-
     case Supervisor.start_child(PhoenixPlayground.Application, {PhoenixPlayground, options}) do
       {:ok, pid} ->
         {:ok, pid}
@@ -153,6 +149,10 @@ defmodule PhoenixPlayground do
 
     path = options[:file]
     Application.put_env(:phoenix_playground, :file, path)
+
+    if plug = options[:plug] do
+      Application.put_env(:phoenix_playground, :plug, plug)
+    end
 
     if options[:debug_errors] do
       Application.put_env(:phoenix_playground, :debug_errors, true)

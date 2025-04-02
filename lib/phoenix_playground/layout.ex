@@ -70,7 +70,7 @@ defmodule PhoenixPlayground.Layout do
           })
         </script>
 
-        <%= @inner_content %>
+        { @inner_content }
       </body>
     </html>
     """
