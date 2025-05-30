@@ -21,10 +21,6 @@ defmodule TimelineLive do
     {:ok, socket}
   end
 
-  def handle_event("validate", %{"content" => content}, socket) do
-    {:noreply, assign(socket, :form, to_form(%{"content" => content}))}
-  end
-
   def handle_event("create_post", %{"content" => content}, socket) do
     post = %{
       id: System.unique_integer([:positive]),
@@ -58,8 +54,8 @@ defmodule TimelineLive do
     <div class="timeline">
       <h1>Timeline</h1>
 
-      <.form for={@form} phx-submit="create_post" phx-change="validate" id="post-form">
-        <textarea name="content" placeholder="What's on your mind?"><%= @form.params["content"] %></textarea>
+      <.form for={@form} phx-submit="create_post" id="post-form">
+        <textarea name="content" placeholder="What's on your mind?" id="content" phx-hook="CmdEnterSubmit"><%= @form.params["content"] %></textarea>
         <button type="submit">Post</button>
       </.form>
 
@@ -67,12 +63,25 @@ defmodule TimelineLive do
         <div :for={{dom_id, post} <- @streams.posts} id={dom_id} class="post">
           <div class="post-content">
             <p><%= post.content %></p>
-            <small><%= post.inserted_at %></small>
+            <small>{Calendar.strftime(post.inserted_at, "%d.%m.%Y %H:%M:%S")}</small>
           </div>
           <button phx-click="delete_post" phx-value-dom_id={dom_id} class="delete-btn">Delete</button>
         </div>
       </div>
     </div>
+
+    <script>
+      window.hooks.CmdEnterSubmit = {
+        mounted() {
+        this.el.addEventListener("keydown", (e) => {
+          if (e.metaKey && e.key === 'Enter') {
+            this.el.form.dispatchEvent(
+              new Event('submit', {bubbles: true, cancelable: true}));
+          }
+        })
+        }
+      }
+    </script>
 
     <style>
       * {
