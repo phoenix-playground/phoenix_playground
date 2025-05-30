@@ -63,7 +63,7 @@ defmodule TimelineLive do
         <div :for={{dom_id, post} <- @streams.posts} id={dom_id} class="post">
           <div class="post-content">
             <p><%= post.content %></p>
-            <small>{Calendar.strftime(post.inserted_at, "%d.%m.%Y %H:%M:%S")}</small>
+            <small>{DateTime.truncate(post.inserted_at, :second)}</small>
           </div>
           <button phx-click="delete_post" phx-value-dom_id={dom_id} class="delete-btn">Delete</button>
         </div>
