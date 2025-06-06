@@ -19,8 +19,20 @@ defmodule PhoenixPlayground.Endpoint do
   plug Plug.Static, from: {:phoenix, "priv/static"}, at: "/assets/phoenix"
   plug Plug.Static, from: {:phoenix_live_view, "priv/static"}, at: "/assets/phoenix_live_view"
 
-  socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
-  plug :run_live_reload
+  if Application.compile_env(:phoenix_playground, :live_reload, true) do
+    socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
+    plug :run_live_reload
+
+    defp run_live_reload(conn, _options) do
+      if Application.get_env(:phoenix_playground, :live_reload) do
+        conn
+        |> Phoenix.LiveReloader.call([])
+        |> Phoenix.CodeReloader.call(reloader: &PhoenixPlayground.CodeReloader.reload/2)
+      else
+        conn
+      end
+    end
+  end
 
   # TODO:
   # plug Phoenix.Ecto.CheckRepoStatus, otp_app: :phoenix_playground
@@ -34,16 +46,6 @@ defmodule PhoenixPlayground.Endpoint do
 
   plug Plug.Session, @session_options
   plug PhoenixPlayground.Router
-
-  defp run_live_reload(conn, _options) do
-    if Application.get_env(:phoenix_playground, :live_reload) do
-      conn
-      |> Phoenix.LiveReloader.call([])
-      |> Phoenix.CodeReloader.call(reloader: &PhoenixPlayground.CodeReloader.reload/2)
-    else
-      conn
-    end
-  end
 
   # See https://github.com/phoenixframework/phoenix/blob/v1.7.14/lib/phoenix/endpoint.ex#L484:L490
   @plug_debugger [
