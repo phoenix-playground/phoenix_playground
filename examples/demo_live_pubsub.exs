@@ -1,5 +1,5 @@
 Mix.install([
-  {:phoenix_playground, "~> 0.1.6"}
+  {:phoenix_playground, "~> 0.1.7"}
 ])
 
 defmodule TimelineLive do

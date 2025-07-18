@@ -1,6 +1,6 @@
 #!/usr/bin/env elixir
 Mix.install([
-  {:phoenix_playground, "~> 0.1.6"}
+  {:phoenix_playground, "~> 0.1.7"}
 ])
 
 defmodule DemoController do
@@ -21,9 +21,8 @@ defmodule DemoController do
 
   def index(assigns) do
     ~H"""
-    <span><%= @count %></span>
+    <span>{@count}</span>
     <button onclick={"window.location.href=\"/?count=#{@count + 1}\""}>+</button>
-    <button onclick={"window.location.href=\"/?count=#{@count - 1}\""}>-</button>
 
     <style type="text/css">
       body { padding: 1em; }

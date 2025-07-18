@@ -14,7 +14,7 @@ Create a `demo_live.exs` file:
 
 ```elixir
 Mix.install([
-  {:phoenix_playground, "~> 0.1.6"}
+  {:phoenix_playground, "~> 0.1.7"}
 ])
 
 defmodule DemoLive do
@@ -26,9 +26,8 @@ defmodule DemoLive do
 
   def render(assigns) do
     ~H"""
-    <span><%= @count %></span>
+    <span>{@count}</span>
     <button phx-click="inc">+</button>
-    <button phx-click="dec">-</button>
 
     <style type="text/css">
       body { padding: 1em; }
@@ -38,10 +37,6 @@ defmodule DemoLive do
 
   def handle_event("inc", _params, socket) do
     {:noreply, assign(socket, count: socket.assigns.count + 1)}
-  end
-
-  def handle_event("dec", _params, socket) do
-    {:noreply, assign(socket, count: socket.assigns.count - 1)}
   end
 end
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env elixir
 Mix.install([
-  {:phoenix_playground, "~> 0.1.6"}
+  {:phoenix_playground, "~> 0.1.7"}
 ])
 
 defmodule DemoLive do
@@ -12,18 +12,13 @@ defmodule DemoLive do
 
   def render(assigns) do
     ~H"""
-    <span>Count: <%= @count %></span>
+    <span>Count: {@count}</span>
     <button phx-click="inc">+</button>
-    <button phx-click="dec">-</button>
     """
   end
 
   def handle_event("inc", _params, socket) do
     {:noreply, update(socket, :count, &(&1 + 1))}
-  end
-
-  def handle_event("dec", _params, socket) do
-    {:noreply, update(socket, :count, &(&1 - 1))}
   end
 end
 
