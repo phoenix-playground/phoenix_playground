@@ -2,7 +2,7 @@ defmodule PhoenixPlayground.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/phoenix-playground/phoenix_playground"
-  @version "0.1.7"
+  @version "0.1.8"
 
   def project do
     [
@@ -26,7 +26,7 @@ defmodule PhoenixPlayground.MixProject do
 
   defp package do
     [
-      description: "Phoenix Playground makes it easy to create single-file Phoenix applications",
+      description: "Phoenix Playground makes it easy to create single-file Phoenix applications.",
       licenses: ["Apache-2.0"],
       links: %{
         "GitHub" => @source_url,
@@ -81,10 +81,10 @@ defmodule PhoenixPlayground.MixProject do
   defp deps do
     [
       {:phoenix, "~> 1.0"},
-      {:phoenix_live_view, "~> 1.0"},
+      {:phoenix_live_view, "~> 1.1"},
       {:bandit, "~> 1.0"},
       {:jason, "~> 1.0"},
-      {:floki, "~> 0.35"},
+      {:lazy_html, "~> 0.1.3"},
 
       # Don't start phoenix_live_reload in case someone just wants PhoenixPlayground.Test.
       # Instead, manually start it in PhoenixPlayground.start_link/1.
