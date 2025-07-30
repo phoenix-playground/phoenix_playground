@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.8 (2025-07-30)
+
+  * Use Phoenix LiveView v1.1.
+
 ## v0.1.7 (2024-09-24)
 
   * Delegate LiveView `handle_async/3`.

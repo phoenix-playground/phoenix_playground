@@ -1,6 +1,6 @@
 #!/usr/bin/env elixir
 Mix.install([
-  {:phoenix_playground, "~> 0.1.7"}
+  {:phoenix_playground, "~> 0.1.8"}
 ])
 
 defmodule DemoHooks do
