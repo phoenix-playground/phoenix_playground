@@ -40,7 +40,7 @@ defmodule DemoLive do
   end
 end
 
-PhoenixPlayground.start(live: DemoLive, open_browser: true)
+PhoenixPlayground.start(live: DemoLive)
 ```
 
 and run it:

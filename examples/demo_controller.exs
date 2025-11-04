@@ -31,4 +31,4 @@ defmodule DemoController do
   end
 end
 
-PhoenixPlayground.start(controller: DemoController, open_browser: true)
+PhoenixPlayground.start(controller: DemoController)

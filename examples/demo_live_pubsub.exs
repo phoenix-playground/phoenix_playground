@@ -208,4 +208,4 @@ defmodule TimelineLive do
   end
 end
 
-PhoenixPlayground.start(live: TimelineLiv, open_browser: true)
+PhoenixPlayground.start(live: TimelineLive)

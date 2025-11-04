@@ -6,6 +6,5 @@ Mix.install([
 PhoenixPlayground.start(
   plug: fn conn ->
     Plug.Conn.send_resp(conn, 200, "Hello!")
-  end,
-  open_browser: true
+  end
 )

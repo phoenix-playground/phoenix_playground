@@ -26,4 +26,4 @@ defmodule DemoLive do
   end
 end
 
-PhoenixPlayground.start(live: DemoLiv, open_browser: true)
+PhoenixPlayground.start(live: DemoLive)
