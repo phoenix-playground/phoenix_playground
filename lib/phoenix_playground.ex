@@ -45,7 +45,8 @@ defmodule PhoenixPlayground do
 
     * `:debug_errors` - whether to use Phoenix error debugger, defaults to `true`.
 
-    * `:open_browser` - whether to open the browser on start, defaults to `true`.
+    * `:open_browser` - whether to open the browser on start, defaults to `false`.
+    Attention! This option relies on a system utility to work correctly and it might prevent the application from starting if not available.
 
     * `:child_specs` - child specs to run in Phoenix Playground supervision tree. The playground
       Phoenix endpoint is automatically added and is always the last child spec. Defaults to `[]`.
@@ -145,7 +146,7 @@ defmodule PhoenixPlayground do
         endpoint: PhoenixPlayground.Endpoint,
         endpoint_options: [],
         debug_errors: true,
-        open_browser: true,
+        open_browser: false,
         child_specs: []
       ])
 
@@ -159,7 +160,7 @@ defmodule PhoenixPlayground do
     end
 
     if options[:open_browser] do
-      Application.put_env(:phoenix, :browser_open, true)
+      Application.put_env(:phoenix, :browser_open, false)
     end
 
     if live = options[:live] do
