@@ -3,6 +3,8 @@ defmodule PhoenixPlayground do
   Phoenix Playground makes it easy to create single-file Phoenix applications.
   """
 
+  require Logger
+
   @secret_key_base [
                      then(:inet.gethostname(), fn {:ok, host} -> host end),
                      System.get_env("USER", ""),
@@ -252,6 +254,14 @@ defmodule PhoenixPlayground do
         ]
 
     System.no_halt(true)
-    Supervisor.start_link(children, strategy: :one_for_one)
+
+    case Supervisor.start_link(children, strategy: :one_for_one) do
+      {:ok, pid} ->
+        {:ok, pid}
+
+      {:error, reason} ->
+        Logger.error(Exception.format_exit(reason))
+        {:error, reason}
+    end
   end
 end
