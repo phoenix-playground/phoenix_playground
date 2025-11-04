@@ -48,7 +48,6 @@ defmodule PhoenixPlayground do
     * `:debug_errors` - whether to use Phoenix error debugger, defaults to `true`.
 
     * `:open_browser` - whether to open the browser on start, defaults to `false`.
-    Attention! This option relies on a system utility to work correctly and it might prevent the application from starting if not available.
 
     * `:child_specs` - child specs to run in Phoenix Playground supervision tree. The playground
       Phoenix endpoint is automatically added and is always the last child spec. Defaults to `[]`.
@@ -256,14 +255,13 @@ defmodule PhoenixPlayground do
 
     System.no_halt(true)
 
-    with {:error, {:shutdown, {:failed_to_start_child, child, {:EXIT, {:enoent, list}}}}} <-
-           Supervisor.start_link(children, strategy: :one_for_one) do
-      for {System, :cmd, [command, _args, _other], _metadata} <- list do
-        Logger.warning("""
-        Failed to start child #{inspect(child)} because the system command #{inspect(command)} was not found.
-        Please ensure that this command is available in your system PATH and try again.
-        """)
-      end
+    case Supervisor.start_link(children, strategy: :one_for_one) do
+      {:ok, pid} ->
+        {:ok, pid}
+
+      {:error, reason} ->
+        Logger.error(Exception.format_exit(reason))
+        {:error, reason}
     end
   end
 end
