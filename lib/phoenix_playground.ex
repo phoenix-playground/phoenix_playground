@@ -3,6 +3,8 @@ defmodule PhoenixPlayground do
   Phoenix Playground makes it easy to create single-file Phoenix applications.
   """
 
+  require Logger
+
   @secret_key_base [
                      then(:inet.gethostname(), fn {:ok, host} -> host end),
                      System.get_env("USER", ""),
@@ -160,7 +162,7 @@ defmodule PhoenixPlayground do
     end
 
     if options[:open_browser] do
-      Application.put_env(:phoenix, :browser_open, false)
+      Application.put_env(:phoenix, :browser_open, true)
     end
 
     if live = options[:live] do
@@ -253,6 +255,15 @@ defmodule PhoenixPlayground do
         ]
 
     System.no_halt(true)
-    Supervisor.start_link(children, strategy: :one_for_one)
+
+    with {:error, {:shutdown, {:failed_to_start_child, child, {:EXIT, {:enoent, list}}}}} <-
+           Supervisor.start_link(children, strategy: :one_for_one) do
+      for {System, :cmd, [command, _args, _other], _metadata} <- list do
+        Logger.warning("""
+        Failed to start child #{inspect(child)} because the system command #{inspect(command)} was not found.
+        Please ensure that this command is available in your system PATH and try again.
+        """)
+      end
+    end
   end
 end
