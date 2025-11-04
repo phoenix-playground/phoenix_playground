@@ -30,4 +30,4 @@ defmodule DemoHooks do
   end
 end
 
-PhoenixPlayground.start(live: DemoHooks)
+PhoenixPlayground.start(live: DemoHook, open_browser: true)

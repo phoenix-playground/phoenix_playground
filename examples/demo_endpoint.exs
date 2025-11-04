@@ -53,4 +53,4 @@ defmodule Demo.Endpoint do
   plug Demo.Router
 end
 
-PhoenixPlayground.start(endpoint: Demo.Endpoint)
+PhoenixPlayground.start(endpoint: Demo.Endpoin, open_browser: true)

@@ -44,4 +44,4 @@ defmodule DemoRouter do
   end
 end
 
-PhoenixPlayground.start(plug: DemoRouter)
+PhoenixPlayground.start(plug: DemoRouter, open_browser: true)
