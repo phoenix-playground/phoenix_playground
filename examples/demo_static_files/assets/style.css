@@ -1,0 +1,49 @@
+/* app.css */
+body {
+  font-family: "Helvetica", "Arial", sans-serif;
+  background-color: #f9fafb;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 1em;
+  padding: 1em;
+}
+
+span {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #1e293b;
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin-left: 20px;
+  border-radius: 30%;
+  background-color: #2563eb;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+button img {
+  width: 32px;
+  height: 32px;
+  filter: invert(100%) brightness(200%);
+}
+
+button:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.05);
+}
+
+button:active {
+  background-color: #1e40af;
+  transform: scale(0.98);
+}
