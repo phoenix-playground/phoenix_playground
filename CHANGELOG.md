@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.9 (2026-07-29)
+
+  * Add `:plug` option to `PhoenixPlayground.Test`.
+
 ## v0.1.8 (2025-07-30)
 
   * Use Phoenix LiveView v1.1.
