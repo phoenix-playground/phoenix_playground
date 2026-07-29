@@ -51,11 +51,12 @@ defmodule PhoenixPlayground.Test do
       Keyword.validate!(options, [
         :live,
         :controller,
+        :plug,
         endpoint: PhoenixPlayground.Endpoint
       ])
 
     imports =
-      if options[:live] do
+      if options[:live] || options[:plug] do
         quote do
           import(Phoenix.LiveViewTest)
         end
@@ -72,6 +73,10 @@ defmodule PhoenixPlayground.Test do
 
         if live = options[:live] do
           Application.put_env(:phoenix_playground, :live, live)
+        end
+
+        if plug = options[:plug] do
+          Application.put_env(:phoenix_playground, :plug, plug)
         end
 
         start_supervised!(
