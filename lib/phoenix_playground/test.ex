@@ -71,9 +71,11 @@ defmodule PhoenixPlayground.Test do
       setup do
         options = unquote(options)
 
-        if live = options[:live] do
-          Application.put_env(:phoenix_playground, :live, live)
-        end
+        Enum.each([:live, :plug], fn key ->
+          if config = options[key] do
+            Application.put_env(:phoenix_playground, key, config)
+          end
+        end)
 
         if plug = options[:plug] do
           Application.put_env(:phoenix_playground, :plug, plug)

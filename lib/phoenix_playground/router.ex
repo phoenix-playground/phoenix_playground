@@ -14,6 +14,21 @@ defmodule PhoenixPlayground.Router do
 
     options = endpoint.config(:phoenix_playground)
 
+    conn =
+      if plug = options[:plug] do
+        call_custom_plug(conn, plug)
+      else
+        conn
+      end
+
+    if conn.halted or conn.state == :sent do
+      conn
+    else
+      call_router(conn, options)
+    end
+  end
+
+  defp call_router(conn, options) do
     cond do
       options[:live] ->
         PhoenixPlayground.Router.LiveRouter.call(conn, [])
@@ -23,25 +38,29 @@ defmodule PhoenixPlayground.Router do
         PhoenixPlayground.Router.ControllerRouter.call(conn, [])
 
       options[:plug] ->
-        # always fetch plug from app env to allow code reloading anonymous functions
-        plug = Application.fetch_env!(:phoenix_playground, :plug)
-
-        case plug do
-          module when is_atom(module) ->
-            module.call(conn, module.init([]))
-
-          {module, options} when is_atom(module) ->
-            module.call(conn, module.init(options))
-
-          fun when is_function(fun, 1) ->
-            fun.(conn)
-
-          fun when is_function(fun, 2) ->
-            fun.(conn, [])
-        end
+        conn  # already handled
 
       true ->
         raise ArgumentError, "expected :live, :controller, or :plug, got: #{inspect(options)}"
+    end
+  end
+
+  defp call_custom_plug(conn, _plug) do
+    # always fetch plug from app env to allow code reloading anonymous functions
+    plug = Application.fetch_env!(:phoenix_playground, :plug)
+
+    case plug do
+      module when is_atom(module) ->
+        module.call(conn, module.init([]))
+
+      {module, options} when is_atom(module) ->
+        module.call(conn, module.init(options))
+
+      fun when is_function(fun, 1) ->
+        fun.(conn)
+
+      fun when is_function(fun, 2) ->
+        fun.(conn, [])
     end
   end
 

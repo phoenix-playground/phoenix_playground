@@ -23,3 +23,4 @@ end
 
 Examples.run("#{__DIR__}/../examples/demo_controller_test.exs")
 Examples.run("#{__DIR__}/../examples/demo_live_test.exs")
+Examples.run("#{__DIR__}/../examples/demo_static_files/demo_static_files_test.exs")

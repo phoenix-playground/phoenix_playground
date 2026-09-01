@@ -63,6 +63,8 @@ See more examples below:
   * [`examples/demo_hooks.exs`]
   * [`examples/demo_endpoint.exs`]
   * [`examples/demo_live_pubsub.exs`]
+  * [`examples/demo_static_files/demo_static_files.exs`]
+  * [`examples/demo_static_files/demo_static_files_test.exs`]
 
 ## License
 
@@ -87,3 +89,5 @@ limitations under the License.
 [`examples/demo_hooks.exs`]: examples/demo_hooks.exs
 [`examples/demo_endpoint.exs`]: examples/demo_endpoint.exs
 [`examples/demo_live_pubsub.exs`]: examples/demo_live_pubsub.exs
+[`examples/demo_static_files/demo_static_files.exs`]: examples/demo_static_files/demo_static_files.exs
+[`examples/demo_static_files/demo_static_files_test.exs`]: examples/demo_static_files/demo_static_files_test.exs
